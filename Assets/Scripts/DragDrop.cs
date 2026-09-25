@@ -29,7 +29,7 @@ public class DragDrop : MonoBehaviour
             if (!hit)
             {
                 hit = Physics2D.Raycast(worldPos, Vector2.zero, 100, dragLayer);
-                originalPos = hit.collider.gameObject.transform.position;
+                if (hit) originalPos = hit.collider.gameObject.transform.position;
             }
             
         }
