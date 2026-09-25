@@ -5,6 +5,7 @@ using TMPro;
 
 public class DialogueManager : MonoBehaviour
 {
+    [SerializeField] CustomerManager CM;
     public TextMeshProUGUI TextDisplay;
     public GameObject TextBox;
     public AudioClip TalkSfx;
@@ -56,7 +57,6 @@ public class DialogueManager : MonoBehaviour
         TargetPos = new Vector3(0,-302,0);
 
         yield return new WaitForSeconds(0.5f);
-        TypewriterEffect(Text, TextDisplay);
         doLerp = false;
         t = 0f;
     }
@@ -94,7 +94,9 @@ public class DialogueManager : MonoBehaviour
     {
         for (int z = 0; z < Convo.Lines.Count; z++)
         {
-            string dialogue = Convo.Lines[z].text;
+            TalkSfx = CM.FindNPC(Convo.Lines[z].npcId).TextSFX;
+            string dialogue = CM.FindNPC(Convo.Lines[z].npcId).Name + ": ";
+            dialogue += Convo.Lines[z].text;
             string talking = "";
             for (int i = 0; i < dialogue.Length; i++)
             {
