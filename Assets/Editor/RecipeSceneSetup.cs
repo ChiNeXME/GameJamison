@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using TheLastMooncake.Flow;
 using TheLastMooncake.Recipe;
 using UnityEditor;
@@ -216,6 +217,8 @@ public static class RecipeSceneSetup
     {
         GameObject correctPanel = RequireObject(objects, "CorrectPanel");
         GameObject wrongPanel = RequireObject(objects, "WrongPanel");
+        StyleFeedbackPanel(correctPanel, new Color(0.18f, 0.42f, 0.2f, 0.96f), "RECIPE CORRECT");
+        StyleFeedbackPanel(wrongPanel, new Color(0.48f, 0.16f, 0.13f, 0.96f), "TRY ANOTHER COMBINATION");
         correctPanel.SetActive(false);
         wrongPanel.SetActive(false);
 
@@ -230,15 +233,16 @@ public static class RecipeSceneSetup
 
     private static void ArrangeGreybox(Dictionary<string, GameObject> objects)
     {
-        SetWorldPosition(objects, "Lotus", new Vector3(-6f, 3f, 0f));
-        SetWorldPosition(objects, "RedBean", new Vector3(-6f, 1.5f, 0f));
-        SetWorldPosition(objects, "SaltedYolk", new Vector3(-6f, 0f, 0f));
-        SetWorldPosition(objects, "Osmanthus", new Vector3(-6f, -1.5f, 0f));
-        SetWorldPosition(objects, "Sesame", new Vector3(-6f, -3f, 0f));
+        ArrangeIngredient(objects, "Lotus", "LOTUS PASTE", new Vector3(-7f, 2.8f, 0f), new Color(0.95f, 0.78f, 0.35f));
+        ArrangeIngredient(objects, "RedBean", "RED BEAN PASTE", new Vector3(-7f, 1.4f, 0f), new Color(0.55f, 0.12f, 0.13f));
+        ArrangeIngredient(objects, "SaltedYolk", "SALTED EGG YOLK", new Vector3(-7f, 0f, 0f), new Color(1f, 0.45f, 0.08f));
+        ArrangeIngredient(objects, "Osmanthus", "OSMANTHUS", new Vector3(-7f, -1.4f, 0f), new Color(0.95f, 0.65f, 0.12f));
+        ArrangeIngredient(objects, "Sesame", "SESAME", new Vector3(-7f, -2.8f, 0f), new Color(0.25f, 0.25f, 0.28f));
 
-        SetWorldPosition(objects, "FillingTarget", new Vector3(2f, 2.5f, 0f));
-        SetWorldPosition(objects, "CentreTarget", new Vector3(2f, 0.5f, 0f));
-        SetWorldPosition(objects, "FinishTarget", new Vector3(2f, -1.5f, 0f));
+        ArrangeTarget(objects, "FillingTarget", "FILLING", new Vector3(-2.8f, 0.2f, 0f));
+        ArrangeTarget(objects, "CentreTarget", "CENTRE", new Vector3(3.6f, 0.2f, 0f));
+        ArrangeTarget(objects, "FinishTarget", "FINISH", new Vector3(0.4f, -2.2f, 0f));
+        CreateMoldPlaceholder(objects);
 
         Canvas canvas = RequireComponent<Canvas>(objects, "Canvas");
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
@@ -247,14 +251,154 @@ public static class RecipeSceneSetup
         scaler.referenceResolution = new Vector2(1920f, 1080f);
         scaler.matchWidthOrHeight = 0.5f;
 
-        SetRect(objects, "CentreControls", new Vector2(0.5f, 0f), new Vector2(-320f, 110f), new Vector2(280f, 130f));
-        SetRect(objects, "SweetnessControls", new Vector2(0.5f, 0f), new Vector2(0f, 110f), new Vector2(480f, 130f));
-        SetRect(objects, "SubmitRecipeButton", new Vector2(0.5f, 0f), new Vector2(340f, 110f), new Vector2(250f, 70f));
+        SetRect(objects, "CentreControls", new Vector2(0.5f, 0f), new Vector2(-300f, 95f), new Vector2(300f, 120f));
+        SetRect(objects, "SweetnessControls", new Vector2(0.5f, 0f), new Vector2(40f, 95f), new Vector2(480f, 120f));
+        SetRect(objects, "SubmitRecipeButton", new Vector2(0.5f, 0f), new Vector2(430f, 95f), new Vector2(320f, 82f));
         SetRect(objects, "LeaveEmptyButton", new Vector2(0.5f, 0.5f), new Vector2(0f, -20f), new Vector2(240f, 55f));
         SetRect(objects, "LessSugarButton", new Vector2(0.5f, 0.5f), new Vector2(-115f, -20f), new Vector2(210f, 55f));
         SetRect(objects, "RegularSugarButton", new Vector2(0.5f, 0.5f), new Vector2(115f, -20f), new Vector2(210f, 55f));
         SetRect(objects, "CorrectPanel", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(680f, 180f));
         SetRect(objects, "WrongPanel", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(680f, 180f));
+
+        CreateOverlayText(canvas.transform, "GameTitle", "THE LAST MOONCAKE", new Vector2(0f, 1f), new Vector2(190f, -65f), new Vector2(330f, 80f), 34f, TextAlignmentOptions.Left);
+        CreateOverlayText(canvas.transform, "InstructionText", "Build the mooncake they remember.", new Vector2(0.5f, 1f), new Vector2(0f, -100f), new Vector2(760f, 70f), 34f, TextAlignmentOptions.Center);
+        CreateMemoryPlaceholder(canvas.transform);
+    }
+
+    private static void ArrangeIngredient(
+        Dictionary<string, GameObject> objects,
+        string name,
+        string label,
+        Vector3 position,
+        Color color)
+    {
+        GameObject ingredient = RequireObject(objects, name);
+        SetWorldPosition(objects, name, position);
+        SpriteRenderer renderer = RequireOrAdd<SpriteRenderer>(ingredient);
+        if (renderer.sprite == null)
+        {
+            renderer.sprite = RequireObject(objects, "FillingTarget").GetComponent<SpriteRenderer>().sprite;
+        }
+        renderer.color = color;
+        renderer.sortingOrder = 2;
+        ingredient.transform.localScale = new Vector3(1.25f, 1.05f, 1f);
+        CreateWorldLabel(ingredient.transform, label, new Vector3(0f, -0.75f, 0f), 2.2f);
+    }
+
+    private static void ArrangeTarget(
+        Dictionary<string, GameObject> objects,
+        string name,
+        string label,
+        Vector3 position)
+    {
+        GameObject target = RequireObject(objects, name);
+        SetWorldPosition(objects, name, position);
+        SpriteRenderer renderer = RequireOrAdd<SpriteRenderer>(target);
+        renderer.color = new Color(0.35f, 0.2f, 0.12f, 0.82f);
+        renderer.sortingOrder = 3;
+        target.transform.localScale = new Vector3(1.7f, 1.7f, 1f);
+        CreateWorldLabel(target.transform, label, Vector3.zero, 2.6f);
+    }
+
+    private static void CreateMoldPlaceholder(Dictionary<string, GameObject> objects)
+    {
+        GameObject recipeArea = RequireObject(objects, "RecipeArea");
+        Transform existing = recipeArea.transform.Find("MooncakeMoldPlaceholder");
+        GameObject mold = existing != null ? existing.gameObject : new GameObject("MooncakeMoldPlaceholder");
+        mold.transform.SetParent(recipeArea.transform, false);
+        mold.transform.position = new Vector3(0.4f, 0.35f, 0f);
+        mold.transform.localScale = new Vector3(3.6f, 2.8f, 1f);
+
+        SpriteRenderer renderer = RequireOrAdd<SpriteRenderer>(mold);
+        renderer.sprite = RequireObject(objects, "FillingTarget").GetComponent<SpriteRenderer>().sprite;
+        renderer.color = new Color(0.34f, 0.18f, 0.09f, 0.65f);
+        renderer.sortingOrder = 0;
+        CreateWorldLabel(mold.transform, "MOONCAKE MOLD", Vector3.zero, 1.3f);
+        EditorUtility.SetDirty(mold);
+    }
+
+    private static void CreateWorldLabel(Transform parent, string text, Vector3 localPosition, float fontSize)
+    {
+        Transform existing = parent.Find("GreyboxLabel");
+        GameObject labelObject = existing != null ? existing.gameObject : new GameObject("GreyboxLabel");
+        labelObject.transform.SetParent(parent, false);
+        labelObject.transform.localPosition = localPosition;
+        labelObject.transform.localScale = Vector3.one;
+
+        TextMeshPro label = RequireOrAdd<TextMeshPro>(labelObject);
+        label.text = text;
+        label.fontSize = fontSize;
+        label.alignment = TextAlignmentOptions.Center;
+        label.color = new Color(1f, 0.9f, 0.7f);
+        label.sortingOrder = 20;
+        label.rectTransform.sizeDelta = new Vector2(5f, 1.2f);
+        EditorUtility.SetDirty(labelObject);
+    }
+
+    private static TextMeshProUGUI CreateOverlayText(
+        Transform canvas,
+        string name,
+        string text,
+        Vector2 anchor,
+        Vector2 position,
+        Vector2 size,
+        float fontSize,
+        TextAlignmentOptions alignment)
+    {
+        Transform existing = canvas.Find(name);
+        GameObject textObject = existing != null ? existing.gameObject : new GameObject(name, typeof(RectTransform));
+        textObject.transform.SetParent(canvas, false);
+        TextMeshProUGUI label = RequireOrAdd<TextMeshProUGUI>(textObject);
+        label.text = text;
+        label.fontSize = fontSize;
+        label.fontStyle = FontStyles.Bold;
+        label.alignment = alignment;
+        label.color = new Color(1f, 0.82f, 0.47f);
+
+        RectTransform rect = label.rectTransform;
+        rect.anchorMin = anchor;
+        rect.anchorMax = anchor;
+        rect.pivot = anchor;
+        rect.anchoredPosition = position;
+        rect.sizeDelta = size;
+        EditorUtility.SetDirty(textObject);
+        return label;
+    }
+
+    private static void CreateMemoryPlaceholder(Transform canvas)
+    {
+        Transform existing = canvas.Find("MemoriesButton");
+        GameObject buttonObject = existing != null
+            ? existing.gameObject
+            : new GameObject("MemoriesButton", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(Button));
+        buttonObject.transform.SetParent(canvas, false);
+        Image image = RequireOrAdd<Image>(buttonObject);
+        image.color = new Color(0.22f, 0.12f, 0.08f, 0.9f);
+        RectTransform rect = buttonObject.GetComponent<RectTransform>();
+        rect.anchorMin = Vector2.one;
+        rect.anchorMax = Vector2.one;
+        rect.pivot = Vector2.one;
+        rect.anchoredPosition = new Vector2(-45f, -45f);
+        rect.sizeDelta = new Vector2(210f, 105f);
+
+        TextMeshProUGUI label = CreateOverlayText(buttonObject.transform, "Label", "MEMORIES", new Vector2(0.5f, 0.5f), Vector2.zero, rect.sizeDelta, 27f, TextAlignmentOptions.Center);
+        label.rectTransform.pivot = new Vector2(0.5f, 0.5f);
+        EditorUtility.SetDirty(buttonObject);
+    }
+
+    private static void StyleFeedbackPanel(GameObject panel, Color color, string message)
+    {
+        Image image = RequireOrAdd<Image>(panel);
+        image.color = color;
+        TextMeshProUGUI label = panel.GetComponentInChildren<TextMeshProUGUI>(true);
+        if (label != null)
+        {
+            label.text = message;
+            label.fontSize = 34f;
+            label.fontStyle = FontStyles.Bold;
+            label.alignment = TextAlignmentOptions.Center;
+            label.color = Color.white;
+        }
     }
 
     private static void SetWorldPosition(
