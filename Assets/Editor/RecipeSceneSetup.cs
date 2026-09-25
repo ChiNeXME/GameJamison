@@ -11,10 +11,13 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.UI;
 
 public static class RecipeSceneSetup
 {
     private const string ScenePath = "Assets/Scenes/CafeTime.unity";
+    private const string MainMenuScenePath = "Assets/Scenes/MainMenu.unity";
 
     [MenuItem("Tools/Last Mooncake/Configure Recipe Scene")]
     public static void ConfigureRecipeScene()
@@ -51,12 +54,14 @@ public static class RecipeSceneSetup
         SetObjectArray(selection, "targets", filling, centre, finish);
         SetObjectReference(validator, "selection", selection);
         SetObjectReference(feedback, "validator", validator);
+        SetObjectReference(feedback, "selection", selection);
 
         ConfigureChoiceButton(objects, "LeaveEmptyButton", selection, RecipeCategory.Centre, RecipeChoice.NoYolk);
         ConfigureChoiceButton(objects, "LessSugarButton", selection, RecipeCategory.Sweetness, RecipeChoice.LowSweetness);
         ConfigureChoiceButton(objects, "RegularSugarButton", selection, RecipeCategory.Sweetness, RecipeChoice.RegularSweetness);
         ConfigureSubmitButton(objects, "SubmitRecipeButton", validator);
         ConfigureFeedback(objects, feedback, flow);
+        ConfigureHintDisplay(objects, selection, feedback);
         ArrangeGreybox(objects);
 
         GameObject player = FindOptional(objects, "Player");
@@ -70,11 +75,16 @@ public static class RecipeSceneSetup
             }
         }
 
-        EditorBuildSettings.scenes = new[] { new EditorBuildSettingsScene(ScenePath, true) };
         EditorSceneManager.MarkSceneDirty(scene);
         EditorSceneManager.SaveScene(scene);
+        CreateMainMenuScene();
+        EditorBuildSettings.scenes = new[]
+        {
+            new EditorBuildSettingsScene(MainMenuScenePath, true),
+            new EditorBuildSettingsScene(ScenePath, true)
+        };
         AssetDatabase.SaveAssets();
-        Debug.Log("The Last Mooncake recipe scene is configured. CafeTime is now the build scene.");
+        Debug.Log("Recipe scene and main menu configured. MainMenu is now the first build scene.");
     }
 
     private static void RemoveMisplacedChoiceButtons(Scene scene)
@@ -229,6 +239,116 @@ public static class RecipeSceneSetup
         RemoveAllPersistentListeners(feedback.OnWrongRecipe);
         UnityEventTools.AddBoolPersistentListener(feedback.OnWrongRecipe, wrongPanel.SetActive, true);
         EditorUtility.SetDirty(feedback);
+    }
+
+    private static void ConfigureHintDisplay(
+        Dictionary<string, GameObject> objects,
+        RecipeSelection selection,
+        RecipeFeedback feedback)
+    {
+        GameObject recipeSystem = RequireObject(objects, "RecipeSystem");
+        RecipeHintDisplay display = RequireOrAdd<RecipeHintDisplay>(recipeSystem);
+        Canvas canvas = RequireComponent<Canvas>(objects, "Canvas");
+
+        Transform existing = canvas.transform.Find("HintPanel");
+        GameObject panel = existing != null
+            ? existing.gameObject
+            : new GameObject("HintPanel", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+        panel.transform.SetParent(canvas.transform, false);
+        Image image = panel.GetComponent<Image>();
+        image.color = new Color(0.16f, 0.10f, 0.07f, 0.96f);
+        RectTransform rect = panel.GetComponent<RectTransform>();
+        rect.anchorMin = new Vector2(0.5f, 0.5f);
+        rect.anchorMax = new Vector2(0.5f, 0.5f);
+        rect.pivot = new Vector2(0.5f, 0.5f);
+        rect.anchoredPosition = new Vector2(0f, -125f);
+        rect.sizeDelta = new Vector2(760f, 105f);
+
+        TextMeshProUGUI label = CreateOverlayText(
+            panel.transform,
+            "HintText",
+            string.Empty,
+            new Vector2(0.5f, 0.5f),
+            Vector2.zero,
+            new Vector2(700f, 85f),
+            27f,
+            TextAlignmentOptions.Center);
+        label.rectTransform.pivot = new Vector2(0.5f, 0.5f);
+
+        SetObjectReference(display, "feedback", feedback);
+        SetObjectReference(display, "selection", selection);
+        SetObjectReference(display, "panel", panel);
+        SetObjectReference(display, "feedbackPanel", RequireObject(objects, "WrongPanel"));
+        SetObjectReference(display, "message", label);
+        panel.SetActive(false);
+        EditorUtility.SetDirty(display);
+    }
+
+    private static void CreateMainMenuScene()
+    {
+        Scene menuScene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+
+        GameObject cameraObject = new("Main Camera", typeof(Camera), typeof(AudioListener));
+        cameraObject.tag = "MainCamera";
+        Camera camera = cameraObject.GetComponent<Camera>();
+        camera.clearFlags = CameraClearFlags.SolidColor;
+        camera.backgroundColor = new Color(0.055f, 0.07f, 0.13f);
+        camera.orthographic = true;
+        cameraObject.transform.position = new Vector3(0f, 0f, -10f);
+
+        GameObject canvasObject = new("Canvas", typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
+        Canvas canvas = canvasObject.GetComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        CanvasScaler scaler = canvasObject.GetComponent<CanvasScaler>();
+        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        scaler.referenceResolution = new Vector2(1920f, 1080f);
+        scaler.matchWidthOrHeight = 0.5f;
+
+        GameObject background = CreateMenuPanel(canvasObject.transform, "Background", new Color(0.08f, 0.07f, 0.12f, 1f));
+        RectTransform backgroundRect = background.GetComponent<RectTransform>();
+        backgroundRect.anchorMin = Vector2.zero;
+        backgroundRect.anchorMax = Vector2.one;
+        backgroundRect.offsetMin = Vector2.zero;
+        backgroundRect.offsetMax = Vector2.zero;
+
+        TextMeshProUGUI title = CreateOverlayText(background.transform, "Title", "THE LAST\nMOONCAKE", new Vector2(0.5f, 0.5f), new Vector2(0f, 190f), new Vector2(900f, 250f), 84f, TextAlignmentOptions.Center);
+        title.color = new Color(1f, 0.78f, 0.35f);
+        TextMeshProUGUI subtitle = CreateOverlayText(background.transform, "Subtitle", "A story about recipes, memory, and moonlight", new Vector2(0.5f, 0.5f), new Vector2(0f, 45f), new Vector2(900f, 65f), 26f, TextAlignmentOptions.Center);
+        subtitle.fontStyle = FontStyles.Normal;
+        subtitle.color = new Color(0.78f, 0.78f, 0.9f);
+
+        GameObject controllerObject = new("MainMenuController", typeof(TheLastMooncake.UI.MainMenuController));
+        TheLastMooncake.UI.MainMenuController controller = controllerObject.GetComponent<TheLastMooncake.UI.MainMenuController>();
+        CreateMenuButton(background.transform, "PlayButton", "PLAY", new Vector2(0f, -85f), controller.Play);
+        CreateMenuButton(background.transform, "QuitButton", "QUIT", new Vector2(0f, -190f), controller.Quit);
+
+        new GameObject("EventSystem", typeof(EventSystem), typeof(InputSystemUIInputModule));
+        EditorSceneManager.SaveScene(menuScene, MainMenuScenePath);
+    }
+
+    private static GameObject CreateMenuPanel(Transform parent, string name, Color color)
+    {
+        GameObject panel = new(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+        panel.transform.SetParent(parent, false);
+        panel.GetComponent<Image>().color = color;
+        return panel;
+    }
+
+    private static void CreateMenuButton(Transform parent, string name, string labelText, Vector2 position, UnityEngine.Events.UnityAction action)
+    {
+        GameObject buttonObject = CreateMenuPanel(parent, name, new Color(0.58f, 0.29f, 0.12f, 1f));
+        RectTransform rect = buttonObject.GetComponent<RectTransform>();
+        rect.anchorMin = new Vector2(0.5f, 0.5f);
+        rect.anchorMax = new Vector2(0.5f, 0.5f);
+        rect.pivot = new Vector2(0.5f, 0.5f);
+        rect.anchoredPosition = position;
+        rect.sizeDelta = new Vector2(360f, 78f);
+
+        Button button = buttonObject.AddComponent<Button>();
+        UnityEventTools.AddPersistentListener(button.onClick, action);
+        TextMeshProUGUI label = CreateOverlayText(buttonObject.transform, "Label", labelText, new Vector2(0.5f, 0.5f), Vector2.zero, rect.sizeDelta, 32f, TextAlignmentOptions.Center);
+        label.rectTransform.pivot = new Vector2(0.5f, 0.5f);
+        label.color = Color.white;
     }
 
     private static void ArrangeGreybox(Dictionary<string, GameObject> objects)

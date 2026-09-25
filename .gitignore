@@ -16,6 +16,7 @@
 /[Oo]bj/
 /[Bb]uild/
 /[Bb]uilds/
+/Build-Output/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
 *.log

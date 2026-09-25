@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 58cedc04e9ff62b478d53de023ec9b35
+  - enabled: 1
     path: Assets/Scenes/CafeTime.unity
     guid: d24953bef2c9cea409ec2952c7a849d9
   m_configObjects:
