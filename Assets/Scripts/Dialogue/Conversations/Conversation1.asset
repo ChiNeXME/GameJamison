@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 002b9076b5a919941a76b7b86978d20e, type: 3}
+  m_Name: Conversation1
+  m_EditorClassIdentifier: Assembly-CSharp::Conversation
+  Lines:
+  - text: You said this was your grandmother's recipe?
+    npcId: 1
+  - text: It was. She made the same mooncake every year.
+    npcId: 2
+  - text: Then you should remember it had a yolk.
+    npcId: 3
+  - text: I remember Grandmother telling you not to eat the yolks before they reached
+      the cakes.
+    npcId: 2
+  - text: Because she let me place one in the middle. She called it our little moon.
+    npcId: 3
+  - text: What I remember is grinding the lotus seeds with her. She barely added
+      any sugar.
+    npcId: 2
+  - text: Right. She said a mooncake shouldn't taste like a spoonful of syrup.
+    npcId: 3
+  - text: And the smell...
+    npcId: 2
+  - text: The flowers outside the kitchen?
+    npcId: 3
+  - text: Osmanthus. She tucked a sprig behind my ear while the cakes cooled.
+    npcId: 2
+  - text: I had forgotten that.
+    npcId: 3
+  - text: Perhaps neither of you has the whole recipe.
+    npcId: 1
