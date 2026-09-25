@@ -1,4 +1,6 @@
 using TMPro;
+using TheLastMooncake.Customers;
+using TheLastMooncake.Flow;
 using UnityEngine;
 
 namespace TheLastMooncake.Recipe
@@ -7,6 +9,7 @@ namespace TheLastMooncake.Recipe
     {
         [SerializeField] private RecipeFeedback feedback;
         [SerializeField] private RecipeSelection selection;
+        [SerializeField] private CafeSession session;
         [SerializeField] private GameObject panel;
         [SerializeField] private GameObject feedbackPanel;
         [SerializeField] private TextMeshProUGUI message;
@@ -45,26 +48,20 @@ namespace TheLastMooncake.Recipe
 
         private void ShowHint(RecipeCategory category)
         {
-            Show(category switch
-            {
-                RecipeCategory.Filling => "Hint: Think about which seeds were ground into the filling.",
-                RecipeCategory.Centre => "Hint: Remember the little moon placed in the middle.",
-                RecipeCategory.Sweetness => "Hint: The filling should not taste like syrup.",
-                RecipeCategory.Finish => "Hint: Recall the floral scent while the cakes cooled.",
-                _ => "One choice conflicts with the memory."
-            });
+            CaseClue clue = FindClue(category);
+            Show(clue != null ? clue.Hint : "One choice conflicts with the memory.");
         }
 
         private void ShowCorrection(RecipeCategory category)
         {
-            Show(category switch
-            {
-                RecipeCategory.Filling => "Try lotus paste for the filling.",
-                RecipeCategory.Centre => "Place one salted egg yolk in the centre.",
-                RecipeCategory.Sweetness => "Choose less sugar.",
-                RecipeCategory.Finish => "Finish with osmanthus.",
-                _ => "Review the remembered recipe and try again."
-            });
+            CaseClue clue = FindClue(category);
+            Show(clue != null ? clue.Correction : "Review the remembered recipe and try again.");
+        }
+
+        private CaseClue FindClue(RecipeCategory category)
+        {
+            CustomerCase customerCase = session != null ? session.CurrentCase : null;
+            return customerCase != null ? customerCase.GetClue(category) : null;
         }
 
         private void Show(string text)

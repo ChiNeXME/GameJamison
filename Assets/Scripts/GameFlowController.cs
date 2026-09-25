@@ -31,7 +31,11 @@ namespace TheLastMooncake.Flow
 
         private void Start()
         {
-            SetState(initialState);
+            // Another system (e.g. CafeSession) may already have moved the flow on.
+            if (!hasStarted)
+            {
+                SetState(initialState);
+            }
         }
 
         public void SetState(GameState nextState)

@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86f6b1eac22e9e74594b8c753c27087c, type: 3}
+  m_Name: 03_MeiAndJian
+  m_EditorClassIdentifier: Assembly-CSharp::TheLastMooncake.Customers.CustomerCase
+  customerName: Mei & Jian
+  clues:
+  - category: 0
+    answer: 1
+    memoryNote: Mei ground lotus seeds beside Grandmother.
+    hint: 'Hint: Think about which seeds were ground into the filling.'
+    correction: Try lotus paste for the filling.
+  - category: 1
+    answer: 3
+    memoryNote: Jian placed one little moon in the middle.
+    hint: 'Hint: Remember the little moon placed in the middle.'
+    correction: Place one salted egg yolk in the centre.
+  - category: 2
+    answer: 5
+    memoryNote: Only a little sugar. The filling should not taste like syrup.
+    hint: 'Hint: The filling should not taste like syrup.'
+    correction: Choose less sugar.
+  - category: 3
+    answer: 7
+    memoryNote: Osmanthus filled the kitchen while the cakes cooled.
+    hint: 'Hint: Recall the floral scent while the cakes cooled.'
+    correction: Finish with osmanthus.
+  resolutionSummary: The mold shines. Mei and Jian recognise their grandmother's
+    mooncake. Each of them had remembered a different half of it.
