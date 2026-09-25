@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using TheLastMooncake.Customers;
 using TheLastMooncake.Flow;
 using TheLastMooncake.Recipe;
+using TheLastMooncake.UI;
 using UnityEditor;
 using UnityEditor.Events;
 using UnityEditor.SceneManagement;
@@ -13,11 +15,13 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.UI;
+using UnityEngine.Rendering.Universal;
 
 public static class RecipeSceneSetup
 {
     private const string ScenePath = "Assets/Scenes/CafeTime.unity";
     private const string MainMenuScenePath = "Assets/Scenes/MainMenu.unity";
+    private const string CasesFolder = "Assets/Data/Customers";
 
     [MenuItem("Tools/Last Mooncake/Configure Recipe Scene")]
     public static void ConfigureRecipeScene()
@@ -33,6 +37,8 @@ public static class RecipeSceneSetup
         RecipeValidator validator = RequireComponent<RecipeValidator>(objects, "RecipeSystem");
         RecipeFeedback feedback = RequireComponent<RecipeFeedback>(objects, "RecipeSystem");
         GameFlowController flow = RequireComponent<GameFlowController>(objects, "RecipeSystem");
+        GameObject sessionObject = FindOrCreateChild(RequireObject(objects, "Systems").transform, "CafeSession");
+        CafeSession session = RequireOrAdd<CafeSession>(sessionObject);
 
         RemoveMisplacedChoiceButtons(scene);
 
@@ -60,9 +66,10 @@ public static class RecipeSceneSetup
         ConfigureChoiceButton(objects, "LessSugarButton", selection, RecipeCategory.Sweetness, RecipeChoice.LowSweetness);
         ConfigureChoiceButton(objects, "RegularSugarButton", selection, RecipeCategory.Sweetness, RecipeChoice.RegularSweetness);
         ConfigureSubmitButton(objects, "SubmitRecipeButton", validator);
-        ConfigureFeedback(objects, feedback, flow);
-        ConfigureHintDisplay(objects, selection, feedback);
+        ConfigureFeedback(objects, feedback);
+        ConfigureHintDisplay(objects, selection, feedback, session);
         ArrangeGreybox(objects);
+        ConfigureCafeSession(objects, session, EnsureCustomerCases(), flow, selection, validator, feedback, dragDrop);
 
         GameObject player = FindOptional(objects, "Player");
         if (player != null)
@@ -222,8 +229,7 @@ public static class RecipeSceneSetup
 
     private static void ConfigureFeedback(
         Dictionary<string, GameObject> objects,
-        RecipeFeedback feedback,
-        GameFlowController flow)
+        RecipeFeedback feedback)
     {
         GameObject correctPanel = RequireObject(objects, "CorrectPanel");
         GameObject wrongPanel = RequireObject(objects, "WrongPanel");
@@ -232,9 +238,8 @@ public static class RecipeSceneSetup
         correctPanel.SetActive(false);
         wrongPanel.SetActive(false);
 
+        // CafeSession owns the correct-recipe flow (resolution panel, next customer).
         RemoveAllPersistentListeners(feedback.OnCorrectRecipe);
-        UnityEventTools.AddBoolPersistentListener(feedback.OnCorrectRecipe, correctPanel.SetActive, true);
-        UnityEventTools.AddPersistentListener(feedback.OnCorrectRecipe, flow.BeginResolution);
 
         RemoveAllPersistentListeners(feedback.OnWrongRecipe);
         UnityEventTools.AddBoolPersistentListener(feedback.OnWrongRecipe, wrongPanel.SetActive, true);
@@ -244,7 +249,8 @@ public static class RecipeSceneSetup
     private static void ConfigureHintDisplay(
         Dictionary<string, GameObject> objects,
         RecipeSelection selection,
-        RecipeFeedback feedback)
+        RecipeFeedback feedback,
+        CafeSession session)
     {
         GameObject recipeSystem = RequireObject(objects, "RecipeSystem");
         RecipeHintDisplay display = RequireOrAdd<RecipeHintDisplay>(recipeSystem);
@@ -277,11 +283,391 @@ public static class RecipeSceneSetup
 
         SetObjectReference(display, "feedback", feedback);
         SetObjectReference(display, "selection", selection);
+        SetObjectReference(display, "session", session);
         SetObjectReference(display, "panel", panel);
         SetObjectReference(display, "feedbackPanel", RequireObject(objects, "WrongPanel"));
         SetObjectReference(display, "message", label);
         panel.SetActive(false);
         EditorUtility.SetDirty(display);
+    }
+
+    private static CustomerCase[] EnsureCustomerCases()
+    {
+        EnsureFolder("Assets", "Data");
+        EnsureFolder("Assets/Data", "Customers");
+
+        // Assets are only created when missing so later edits in the Inspector are kept.
+        CustomerCase siblings = EnsureCase($"{CasesFolder}/03_MeiAndJian.asset", customerCase => customerCase.EditorSetup(
+            "Mei & Jian",
+            "The mold shines. Mei and Jian recognise their grandmother's mooncake. Each of them had remembered a different half of it.",
+            new CaseClue(RecipeCategory.Filling, RecipeChoice.Lotus,
+                "Mei ground lotus seeds beside Grandmother.",
+                "Hint: Think about which seeds were ground into the filling.",
+                "Try lotus paste for the filling."),
+            new CaseClue(RecipeCategory.Centre, RecipeChoice.SaltedYolk,
+                "Jian placed one little moon in the middle.",
+                "Hint: Remember the little moon placed in the middle.",
+                "Place one salted egg yolk in the centre."),
+            new CaseClue(RecipeCategory.Sweetness, RecipeChoice.LowSweetness,
+                "Only a little sugar. The filling should not taste like syrup.",
+                "Hint: The filling should not taste like syrup.",
+                "Choose less sugar."),
+            new CaseClue(RecipeCategory.Finish, RecipeChoice.Osmanthus,
+                "Osmanthus filled the kitchen while the cakes cooled.",
+                "Hint: Recall the floral scent while the cakes cooled.",
+                "Finish with osmanthus.")));
+
+        CustomerCase kai = EnsureCase($"{CasesFolder}/01_Kai.asset", customerCase => customerCase.EditorSetup(
+            "Kai (SigmaKaito_GYATT)",
+            "The mold glows with far more drama than the situation deserves.\nLEGENDARY MOONCAKE   +9,999 RELATIONSHIP AURA",
+            new CaseClue(RecipeCategory.Filling, RecipeChoice.RedBean,
+                "Crimson main-character aura means the filling must be red. Somehow.",
+                "Hint: Their shared aura is apparently crimson.",
+                "Use red bean paste."),
+            new CaseClue(RecipeCategory.Centre, RecipeChoice.NoYolk,
+                "Egg yolks possess negative aura and would send the relationship to the shadow realm.",
+                "Hint: Yolks have negative aura. Allegedly.",
+                "Leave the centre empty."),
+            new CaseClue(RecipeCategory.Sweetness, RecipeChoice.RegularSweetness,
+                "Maximum sweetness counters bronze teammates, weak Wi-Fi, and household chores.",
+                "Hint: Kai wants it maxed. Full send.",
+                "Choose regular sugar."),
+            new CaseClue(RecipeCategory.Finish, RecipeChoice.Sesame,
+                "Sesame allegedly matches their freak at ninety-eight percent compatibility.",
+                "Hint: Remember the tiny-seed compatibility quiz.",
+                "Finish with sesame.")));
+
+        // Mei & Jian are the emotional finale, so they always come last.
+        // Slot 02 is free for the third customer.
+        return new[] { kai, siblings };
+    }
+
+    private static void EnsureFolder(string parent, string name)
+    {
+        if (!AssetDatabase.IsValidFolder($"{parent}/{name}"))
+        {
+            AssetDatabase.CreateFolder(parent, name);
+        }
+    }
+
+    private static CustomerCase EnsureCase(string path, Action<CustomerCase> initialise)
+    {
+        CustomerCase existing = AssetDatabase.LoadAssetAtPath<CustomerCase>(path);
+        if (existing != null)
+        {
+            return existing;
+        }
+
+        CustomerCase created = ScriptableObject.CreateInstance<CustomerCase>();
+        initialise(created);
+        AssetDatabase.CreateAsset(created, path);
+        return created;
+    }
+
+    private static void ConfigureCafeSession(
+        Dictionary<string, GameObject> objects,
+        CafeSession session,
+        CustomerCase[] defaultCases,
+        GameFlowController flow,
+        RecipeSelection selection,
+        RecipeValidator validator,
+        RecipeFeedback feedback,
+        DragDrop dragDrop)
+    {
+        Transform canvas = RequireComponent<Canvas>(objects, "Canvas").transform;
+        GameObject sessionObject = session.gameObject;
+
+        // Customer order: keep whatever was set in the Inspector, otherwise use the defaults.
+        var serializedSession = new SerializedObject(session);
+        if (serializedSession.FindProperty("cases").arraySize == 0)
+        {
+            SetObjectArray(session, "cases", defaultCases);
+        }
+
+        SetObjectReference(session, "flow", flow);
+        SetObjectReference(session, "selection", selection);
+        SetObjectReference(session, "validator", validator);
+        SetObjectReference(session, "feedback", feedback);
+        SetObjectReference(session, "dragDrop", dragDrop);
+        SetObjectArray(
+            session,
+            "recipeControls",
+            RequireOrAdd<CanvasGroup>(RequireObject(objects, "CentreControls")),
+            RequireOrAdd<CanvasGroup>(RequireObject(objects, "SweetnessControls")),
+            RequireOrAdd<CanvasGroup>(RequireObject(objects, "SubmitRecipeButton")));
+
+        // Top-of-screen labels.
+        TextMeshProUGUI customerLabel = CreateOverlayText(canvas, "CustomerLabel", string.Empty, new Vector2(0.5f, 1f), new Vector2(0f, -40f), new Vector2(760f, 50f), 28f, TextAlignmentOptions.Center);
+        TextMeshProUGUI pauseHint = CreateOverlayText(canvas, "PauseHint", "Esc: Pause", new Vector2(0f, 1f), new Vector2(190f, -150f), new Vector2(330f, 40f), 20f, TextAlignmentOptions.Left);
+        pauseHint.fontStyle = FontStyles.Normal;
+        pauseHint.color = new Color(0.85f, 0.85f, 0.95f, 0.8f);
+        SetObjectReference(session, "customerLabel", customerLabel);
+
+        // Recipe status readout.
+        RecipeStatusDisplay status = RequireOrAdd<RecipeStatusDisplay>(RequireObject(objects, "RecipeSystem"));
+        TextMeshProUGUI statusLabel = CreateOverlayText(canvas, "RecipeStatus", string.Empty, new Vector2(0.5f, 1f), new Vector2(0f, -178f), new Vector2(1100f, 80f), 24f, TextAlignmentOptions.Center);
+        statusLabel.fontStyle = FontStyles.Normal;
+        statusLabel.color = new Color(1f, 0.92f, 0.78f);
+        SetObjectReference(status, "selection", selection);
+        SetObjectReference(status, "validator", validator);
+        SetObjectReference(status, "label", statusLabel);
+
+        ConfigureResolutionPanel(objects, session);
+        GameObject notesPanel = ConfigureMemoryNotes(objects, canvas, session, feedback, out MemoryNotesPanel notes);
+        GameObject endingPanel = ConfigureEnding(canvas, sessionObject, flow);
+        GameObject pausePanel = ConfigurePauseMenu(canvas, sessionObject, session, notes);
+
+        notesPanel.transform.SetAsLastSibling();
+        endingPanel.transform.SetAsLastSibling();
+        pausePanel.transform.SetAsLastSibling();
+        notesPanel.SetActive(false);
+        endingPanel.SetActive(false);
+        pausePanel.SetActive(false);
+
+        ConfigureMoon(objects, session, feedback);
+        EditorUtility.SetDirty(session);
+    }
+
+    private static void ConfigureResolutionPanel(Dictionary<string, GameObject> objects, CafeSession session)
+    {
+        GameObject panel = RequireObject(objects, "CorrectPanel");
+        SetRect(objects, "CorrectPanel", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(880f, 360f));
+
+        Transform titleTransform = panel.transform.Find("Text (TMP)");
+        if (titleTransform != null)
+        {
+            SetAnchoredRect(titleTransform.GetComponent<RectTransform>(), new Vector2(0.5f, 1f), new Vector2(0f, -25f), new Vector2(820f, 60f));
+        }
+
+        TextMeshProUGUI summary = CreateOverlayText(panel.transform, "Summary", string.Empty, new Vector2(0.5f, 0.5f), new Vector2(0f, 15f), new Vector2(800f, 170f), 26f, TextAlignmentOptions.Center);
+        summary.rectTransform.pivot = new Vector2(0.5f, 0.5f);
+        summary.fontStyle = FontStyles.Normal;
+        summary.color = Color.white;
+
+        TextMeshProUGUI continueLabel = CreateButton(panel.transform, "ContinueButton", "NEXT CUSTOMER", new Vector2(0.5f, 0f), new Vector2(0f, 30f), new Vector2(340f, 72f), session.ContinueToNextCase);
+
+        SetObjectReference(session, "resolutionPanel", panel);
+        SetObjectReference(session, "resolutionText", summary);
+        SetObjectReference(session, "continueLabel", continueLabel);
+        panel.SetActive(false);
+    }
+
+    private static GameObject ConfigureMemoryNotes(
+        Dictionary<string, GameObject> objects,
+        Transform canvas,
+        CafeSession session,
+        RecipeFeedback feedback,
+        out MemoryNotesPanel notes)
+    {
+        notes = RequireOrAdd<MemoryNotesPanel>(session.gameObject);
+
+        GameObject backdrop = CreatePanel(canvas, "MemoryNotesPanel", new Color(0f, 0f, 0f, 0.55f));
+        StretchToParent(backdrop.GetComponent<RectTransform>());
+
+        GameObject card = CreatePanel(backdrop.transform, "Card", new Color(0.93f, 0.86f, 0.7f, 1f));
+        SetAnchoredRect(card.GetComponent<RectTransform>(), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(920f, 640f));
+
+        Color ink = new(0.25f, 0.15f, 0.08f);
+        TextMeshProUGUI heading = CreateOverlayText(card.transform, "Heading", "ARTEMIS'S MEMORY NOTES", new Vector2(0.5f, 1f), new Vector2(0f, -25f), new Vector2(840f, 100f), 36f, TextAlignmentOptions.Center);
+        heading.color = ink;
+
+        var rows = new TextMeshProUGUI[4];
+        for (int index = 0; index < rows.Length; index++)
+        {
+            TextMeshProUGUI row = CreateOverlayText(card.transform, $"Note{index}", string.Empty, new Vector2(0.5f, 1f), new Vector2(0f, -145f - index * 100f), new Vector2(820f, 95f), 26f, TextAlignmentOptions.TopLeft);
+            row.fontStyle = FontStyles.Normal;
+            row.color = ink;
+            rows[index] = row;
+        }
+
+        CreateButton(card.transform, "CloseButton", "CLOSE", new Vector2(0.5f, 0f), new Vector2(0f, 25f), new Vector2(240f, 64f), notes.Close);
+
+        GameObject memoriesButton = RequireObject(objects, "MemoriesButton");
+        Button button = RequireOrAdd<Button>(memoriesButton);
+        button.targetGraphic = memoriesButton.GetComponent<Image>();
+        RemoveAllPersistentListeners(button.onClick);
+        UnityEventTools.AddPersistentListener(button.onClick, notes.Toggle);
+        Transform buttonLabel = memoriesButton.transform.Find("Label");
+
+        SetObjectReference(notes, "session", session);
+        SetObjectReference(notes, "feedback", feedback);
+        SetObjectReference(notes, "panel", backdrop);
+        SetObjectReference(notes, "heading", heading);
+        SetObjectArray(notes, "noteRows", rows);
+        SetObjectReference(notes, "buttonLabel", buttonLabel != null ? buttonLabel.GetComponent<TextMeshProUGUI>() : null);
+        EditorUtility.SetDirty(notes);
+        return backdrop;
+    }
+
+    private static GameObject ConfigureEnding(Transform canvas, GameObject sessionObject, GameFlowController flow)
+    {
+        EndingScreen ending = RequireOrAdd<EndingScreen>(sessionObject);
+
+        GameObject panel = CreatePanel(canvas, "EndingPanel", new Color(0.06f, 0.07f, 0.13f, 0.97f));
+        StretchToParent(panel.GetComponent<RectTransform>());
+
+        TextMeshProUGUI title = CreateOverlayText(panel.transform, "Title", "THE MOON SHINES AGAIN", new Vector2(0.5f, 0.5f), new Vector2(0f, 260f), new Vector2(1200f, 110f), 64f, TextAlignmentOptions.Center);
+        title.rectTransform.pivot = new Vector2(0.5f, 0.5f);
+        title.color = new Color(1f, 0.82f, 0.45f);
+
+        TextMeshProUGUI body = CreateOverlayText(panel.transform, "Body", "Full moonlight reaches the bakery floor.\nThe baker places a tiny cat-shaped mooncake on the windowsill, and Artemis takes one bite.", new Vector2(0.5f, 0.5f), new Vector2(0f, 120f), new Vector2(1100f, 140f), 30f, TextAlignmentOptions.Center);
+        body.rectTransform.pivot = new Vector2(0.5f, 0.5f);
+        body.fontStyle = FontStyles.Normal;
+        body.color = new Color(0.9f, 0.9f, 1f);
+
+        TextMeshProUGUI credits = CreateOverlayText(panel.transform, "Credits", "CREDITS\n<size=80%>Add your team's names here</size>", new Vector2(0.5f, 0.5f), new Vector2(0f, -60f), new Vector2(1000f, 160f), 30f, TextAlignmentOptions.Center);
+        credits.rectTransform.pivot = new Vector2(0.5f, 0.5f);
+        credits.color = new Color(0.78f, 0.78f, 0.9f);
+
+        CreateButton(panel.transform, "PlayAgainButton", "PLAY AGAIN", new Vector2(0.5f, 0.5f), new Vector2(-200f, -260f), new Vector2(340f, 78f), ending.PlayAgain);
+        CreateButton(panel.transform, "TitleButton", "RETURN TO TITLE", new Vector2(0.5f, 0.5f), new Vector2(200f, -260f), new Vector2(340f, 78f), ending.ReturnToTitle);
+
+        SetObjectReference(ending, "flow", flow);
+        SetObjectReference(ending, "panel", panel);
+        EditorUtility.SetDirty(ending);
+        return panel;
+    }
+
+    private static GameObject ConfigurePauseMenu(Transform canvas, GameObject sessionObject, CafeSession session, MemoryNotesPanel notes)
+    {
+        PauseMenu pause = RequireOrAdd<PauseMenu>(sessionObject);
+
+        GameObject panel = CreatePanel(canvas, "PausePanel", new Color(0f, 0f, 0f, 0.72f));
+        StretchToParent(panel.GetComponent<RectTransform>());
+
+        TextMeshProUGUI title = CreateOverlayText(panel.transform, "Title", "PAUSED", new Vector2(0.5f, 0.5f), new Vector2(0f, 190f), new Vector2(600f, 100f), 60f, TextAlignmentOptions.Center);
+        title.rectTransform.pivot = new Vector2(0.5f, 0.5f);
+
+        CreateButton(panel.transform, "ResumeButton", "RESUME", new Vector2(0.5f, 0.5f), new Vector2(0f, 60f), new Vector2(360f, 78f), pause.Resume);
+        CreateButton(panel.transform, "RestartButton", "RESTART", new Vector2(0.5f, 0.5f), new Vector2(0f, -40f), new Vector2(360f, 78f), pause.Restart);
+        CreateButton(panel.transform, "TitleButton", "RETURN TO TITLE", new Vector2(0.5f, 0.5f), new Vector2(0f, -140f), new Vector2(360f, 78f), pause.ReturnToTitle);
+
+        SetObjectReference(pause, "panel", panel);
+        SetObjectReference(pause, "session", session);
+        SetObjectReference(pause, "notes", notes);
+        EditorUtility.SetDirty(pause);
+        return panel;
+    }
+
+    private static void ConfigureMoon(Dictionary<string, GameObject> objects, CafeSession session, RecipeFeedback feedback)
+    {
+        GameObject moon = FindOptional(objects, "Moon");
+        if (moon == null)
+        {
+            moon = new GameObject("Moon");
+            Undo.RegisterCreatedObjectUndo(moon, "Create Moon");
+        }
+
+        moon.transform.position = new Vector3(4.6f, 3.6f, 0f);
+
+        SpriteRenderer renderer = RequireOrAdd<SpriteRenderer>(moon);
+        Sprite circle = AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Knob.psd");
+        renderer.sprite = circle != null ? circle : RequireObject(objects, "FillingTarget").GetComponent<SpriteRenderer>().sprite;
+        renderer.sortingOrder = -5;
+        float diameter = 1.3f;
+        float spriteWidth = Mathf.Max(0.0001f, renderer.sprite.bounds.size.x);
+        moon.transform.localScale = Vector3.one * (diameter / spriteWidth);
+
+        GameObject lightObject = FindOrCreateChild(moon.transform, "MoonLight");
+        lightObject.transform.localPosition = Vector3.zero;
+        lightObject.transform.localScale = Vector3.one;
+        Light2D light = RequireOrAdd<Light2D>(lightObject);
+        light.lightType = Light2D.LightType.Point;
+        light.color = new Color(0.62f, 0.68f, 1f);
+        light.pointLightInnerRadius = 0.5f;
+        light.pointLightOuterRadius = 9f;
+
+        // Light every sorting layer so the moonlight reaches the whole counter.
+        var serializedLight = new SerializedObject(light);
+        SerializedProperty layers = serializedLight.FindProperty("m_ApplyToSortingLayers");
+        if (layers != null)
+        {
+            SortingLayer[] sortingLayers = SortingLayer.layers;
+            layers.arraySize = sortingLayers.Length;
+            for (int index = 0; index < sortingLayers.Length; index++)
+            {
+                layers.GetArrayElementAtIndex(index).intValue = sortingLayers[index].id;
+            }
+
+            serializedLight.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        MoonlightController controller = RequireOrAdd<MoonlightController>(moon);
+        SetObjectReference(controller, "session", session);
+        SetObjectReference(controller, "feedback", feedback);
+        SetObjectReference(controller, "moon", renderer);
+        SetObjectReference(controller, "moonLight", light);
+        EditorUtility.SetDirty(moon);
+    }
+
+    private static GameObject FindOrCreateChild(Transform parent, string name)
+    {
+        Transform existing = parent.Find(name);
+        if (existing != null)
+        {
+            return existing.gameObject;
+        }
+
+        GameObject child = new(name);
+        child.transform.SetParent(parent, false);
+        Undo.RegisterCreatedObjectUndo(child, $"Create {name}");
+        return child;
+    }
+
+    private static GameObject CreatePanel(Transform parent, string name, Color color)
+    {
+        Transform existing = parent.Find(name);
+        GameObject panel = existing != null
+            ? existing.gameObject
+            : new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+        panel.transform.SetParent(parent, false);
+        RequireOrAdd<Image>(panel).color = color;
+        EditorUtility.SetDirty(panel);
+        return panel;
+    }
+
+    private static TextMeshProUGUI CreateButton(
+        Transform parent,
+        string name,
+        string labelText,
+        Vector2 anchor,
+        Vector2 position,
+        Vector2 size,
+        UnityEngine.Events.UnityAction action)
+    {
+        GameObject buttonObject = CreatePanel(parent, name, new Color(0.58f, 0.29f, 0.12f, 1f));
+        SetAnchoredRect(buttonObject.GetComponent<RectTransform>(), anchor, position, size);
+
+        Button button = RequireOrAdd<Button>(buttonObject);
+        button.targetGraphic = buttonObject.GetComponent<Image>();
+        RemoveAllPersistentListeners(button.onClick);
+        UnityEventTools.AddPersistentListener(button.onClick, action);
+
+        TextMeshProUGUI label = CreateOverlayText(buttonObject.transform, "Label", labelText, new Vector2(0.5f, 0.5f), Vector2.zero, size, 30f, TextAlignmentOptions.Center);
+        label.rectTransform.pivot = new Vector2(0.5f, 0.5f);
+        label.color = Color.white;
+        EditorUtility.SetDirty(buttonObject);
+        return label;
+    }
+
+    private static void SetAnchoredRect(RectTransform rect, Vector2 anchor, Vector2 position, Vector2 size)
+    {
+        rect.anchorMin = anchor;
+        rect.anchorMax = anchor;
+        rect.pivot = anchor;
+        rect.anchoredPosition = position;
+        rect.sizeDelta = size;
+        rect.localScale = Vector3.one;
+    }
+
+    private static void StretchToParent(RectTransform rect)
+    {
+        rect.anchorMin = Vector2.zero;
+        rect.anchorMax = Vector2.one;
+        rect.pivot = new Vector2(0.5f, 0.5f);
+        rect.offsetMin = Vector2.zero;
+        rect.offsetMax = Vector2.zero;
+        rect.localScale = Vector3.one;
     }
 
     private static void CreateMainMenuScene()

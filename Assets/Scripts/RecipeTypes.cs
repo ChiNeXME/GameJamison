@@ -26,6 +26,30 @@ namespace TheLastMooncake.Recipe
 
     public static class RecipeRules
     {
+        public static readonly RecipeCategory[] AllCategories =
+        {
+            RecipeCategory.Filling,
+            RecipeCategory.Centre,
+            RecipeCategory.Sweetness,
+            RecipeCategory.Finish
+        };
+
+        public static string GetDisplayName(RecipeChoice choice)
+        {
+            return choice switch
+            {
+                RecipeChoice.Lotus => "Lotus paste",
+                RecipeChoice.RedBean => "Red bean paste",
+                RecipeChoice.SaltedYolk => "Salted yolk",
+                RecipeChoice.NoYolk => "Left empty",
+                RecipeChoice.LowSweetness => "Less sugar",
+                RecipeChoice.RegularSweetness => "Regular sugar",
+                RecipeChoice.Osmanthus => "Osmanthus",
+                RecipeChoice.Sesame => "Sesame",
+                _ => "-"
+            };
+        }
+
         public static bool IsChoiceForCategory(RecipeCategory category, RecipeChoice choice)
         {
             return category switch

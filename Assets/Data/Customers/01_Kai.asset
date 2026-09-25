@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86f6b1eac22e9e74594b8c753c27087c, type: 3}
+  m_Name: 01_Kai
+  m_EditorClassIdentifier: Assembly-CSharp::TheLastMooncake.Customers.CustomerCase
+  customerName: Kai (SigmaKaito_GYATT)
+  clues:
+  - category: 0
+    answer: 2
+    memoryNote: Crimson main-character aura means the filling must be red. Somehow.
+    hint: 'Hint: Their shared aura is apparently crimson.'
+    correction: Use red bean paste.
+  - category: 1
+    answer: 4
+    memoryNote: Egg yolks possess negative aura and would send the relationship to
+      the shadow realm.
+    hint: 'Hint: Yolks have negative aura. Allegedly.'
+    correction: Leave the centre empty.
+  - category: 2
+    answer: 6
+    memoryNote: Maximum sweetness counters bronze teammates, weak Wi-Fi, and household
+      chores.
+    hint: 'Hint: Kai wants it maxed. Full send.'
+    correction: Choose regular sugar.
+  - category: 3
+    answer: 8
+    memoryNote: Sesame allegedly matches their freak at ninety-eight percent compatibility.
+    hint: 'Hint: Remember the tiny-seed compatibility quiz.'
+    correction: Finish with sesame.
+  resolutionSummary: 'The mold glows with far more drama than the situation deserves.
+
+    LEGENDARY
+    MOONCAKE   +9,999 RELATIONSHIP AURA'
