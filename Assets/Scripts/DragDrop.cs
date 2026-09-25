@@ -56,13 +56,13 @@ public sealed class DragDrop : MonoBehaviour
 
     private void BeginDrag(Vector2 pointerPosition)
     {
-        RaycastHit2D hit = Physics2D.Raycast(pointerPosition, Vector2.zero, 0f, draggableLayer);
-        if (hit.collider == null)
+        Collider2D hit = Physics2D.OverlapPoint(pointerPosition, draggableLayer);
+        if (hit == null)
         {
             return;
         }
 
-        draggedCollider = hit.collider;
+        draggedCollider = hit;
         originalPosition = draggedCollider.transform.position;
         pointerOffset = originalPosition - (Vector3)pointerPosition;
     }
@@ -72,8 +72,8 @@ public sealed class DragDrop : MonoBehaviour
         Collider2D ingredient = draggedCollider;
         draggedCollider = null;
 
-        RaycastHit2D targetHit = Physics2D.Raycast(pointerPosition, Vector2.zero, 0f, dropTargetLayer);
-        if (targetHit.collider == null)
+        Collider2D target = Physics2D.OverlapPoint(pointerPosition, dropTargetLayer);
+        if (target == null)
         {
             ingredient.transform.position = originalPosition;
             return;
@@ -81,12 +81,12 @@ public sealed class DragDrop : MonoBehaviour
 
         if (snapToTarget)
         {
-            Vector3 targetPosition = targetHit.collider.bounds.center;
+            Vector3 targetPosition = target.bounds.center;
             targetPosition.z = ingredient.transform.position.z;
             ingredient.transform.position = targetPosition;
         }
 
-        IngredientDropped?.Invoke(ingredient.gameObject, targetHit.collider);
+        IngredientDropped?.Invoke(ingredient.gameObject, target);
     }
 
     private void OnDisable()

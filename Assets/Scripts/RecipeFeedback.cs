@@ -12,6 +12,10 @@ namespace TheLastMooncake.Recipe
         [SerializeField] private UnityEvent<RecipeCategory> onExplicitCorrectionRequested = new();
 
         public int FailedAttempts { get; private set; }
+        public UnityEvent OnCorrectRecipe => onCorrectRecipe;
+        public UnityEvent OnWrongRecipe => onWrongRecipe;
+        public UnityEvent<RecipeCategory> OnHintRequested => onHintRequested;
+        public UnityEvent<RecipeCategory> OnExplicitCorrectionRequested => onExplicitCorrectionRequested;
 
         private void OnEnable()
         {

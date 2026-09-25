@@ -24,6 +24,21 @@ namespace TheLastMooncake.Recipe
         Sesame
     }
 
+    public static class RecipeRules
+    {
+        public static bool IsChoiceForCategory(RecipeCategory category, RecipeChoice choice)
+        {
+            return category switch
+            {
+                RecipeCategory.Filling => choice is RecipeChoice.Lotus or RecipeChoice.RedBean,
+                RecipeCategory.Centre => choice is RecipeChoice.SaltedYolk or RecipeChoice.NoYolk,
+                RecipeCategory.Sweetness => choice is RecipeChoice.LowSweetness or RecipeChoice.RegularSweetness,
+                RecipeCategory.Finish => choice is RecipeChoice.Osmanthus or RecipeChoice.Sesame,
+                _ => false
+            };
+        }
+    }
+
     public sealed class RecipeValidationResult
     {
         private readonly List<RecipeCategory> incorrectCategories;

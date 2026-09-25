@@ -34,6 +34,20 @@ namespace TheLastMooncake.Recipe
             return choices.TryGetValue(category, out choice);
         }
 
+        public bool SelectChoice(RecipeCategory category, RecipeChoice choice)
+        {
+            if (!RecipeRules.IsChoiceForCategory(category, choice))
+            {
+                Debug.LogWarning($"{choice} is not a valid choice for {category}.", this);
+                return false;
+            }
+
+            RecipeDropTarget physicalTarget = FindTarget(category);
+            physicalTarget?.Clear();
+            SetChoice(category, choice);
+            return true;
+        }
+
         public void ClearAll()
         {
             if (targets != null)
@@ -45,6 +59,10 @@ namespace TheLastMooncake.Recipe
             }
 
             choices.Clear();
+            RecipeChanged?.Invoke(RecipeCategory.Filling, RecipeChoice.None);
+            RecipeChanged?.Invoke(RecipeCategory.Centre, RecipeChoice.None);
+            RecipeChanged?.Invoke(RecipeCategory.Sweetness, RecipeChoice.None);
+            RecipeChanged?.Invoke(RecipeCategory.Finish, RecipeChoice.None);
         }
 
         private void HandleIngredientDropped(GameObject ingredientObject, Collider2D targetCollider)
@@ -71,8 +89,31 @@ namespace TheLastMooncake.Recipe
                 return;
             }
 
-            choices[option.Category] = option.Choice;
-            RecipeChanged?.Invoke(option.Category, option.Choice);
+            SetChoice(option.Category, option.Choice);
+        }
+
+        private RecipeDropTarget FindTarget(RecipeCategory category)
+        {
+            if (targets == null)
+            {
+                return null;
+            }
+
+            foreach (RecipeDropTarget target in targets)
+            {
+                if (target != null && target.AcceptedCategory == category)
+                {
+                    return target;
+                }
+            }
+
+            return null;
+        }
+
+        private void SetChoice(RecipeCategory category, RecipeChoice choice)
+        {
+            choices[category] = choice;
+            RecipeChanged?.Invoke(category, choice);
         }
     }
 }
