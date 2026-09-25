@@ -1,64 +1,107 @@
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class DragDrop : MonoBehaviour
+/// <summary>
+/// Handles world-space mouse dragging for recipe ingredients.
+/// Valid drops snap the ingredient to a target instead of destroying it.
+/// A future recipe controller can subscribe to IngredientDropped.
+/// </summary>
+public sealed class DragDrop : MonoBehaviour
 {
-    public LayerMask dragLayer;
-    public LayerMask InteractableLayer;
-    private GameObject drag;
+    [Header("Layers")]
+    [SerializeField] private LayerMask draggableLayer = 0;
+    [SerializeField] private LayerMask dropTargetLayer = 0;
+
+    [Header("Drop Behaviour")]
+    [SerializeField] private bool snapToTarget = true;
+
+    public event Action<GameObject, Collider2D> IngredientDropped;
+
     private Camera mainCamera;
-    bool isDragging = false;
-    RaycastHit2D hit;
-    Vector2 originalPos;
+    private Collider2D draggedCollider;
+    private Vector3 originalPosition;
+    private Vector3 pointerOffset;
+
     private void Awake()
     {
         mainCamera = Camera.main;
     }
 
-    void Update()
+    private void Update()
     {
-        Vector2 worldPos = mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        if (Mouse.current != null && Mouse.current.leftButton.isPressed)
+        Mouse mouse = Mouse.current;
+        if (mouse == null || mainCamera == null)
         {
-            isDragging = true;
-
-            //get object under (change accordingly)
-            if (!hit)
-            {
-                hit = Physics2D.Raycast(worldPos, Vector2.zero, 100, dragLayer);
-                if (hit) originalPos = hit.collider.gameObject.transform.position;
-            }
-            
+            return;
         }
 
-        if (Mouse.current != null && Mouse.current.leftButton.wasReleasedThisFrame)
+        Vector2 pointerPosition = mainCamera.ScreenToWorldPoint(mouse.position.ReadValue());
+
+        if (mouse.leftButton.wasPressedThisFrame)
         {
-            isDragging = false;
-
-            //check if the mouse released on smth (ie tray blender etc) and if not, reset back to original
-            RaycastHit2D hitInteractable = Physics2D.Raycast(worldPos, Vector2.zero, 100, InteractableLayer);
-
-            if (hit)
-            {
-                if (hitInteractable) //if on smth like tray, disappear + do smth with that thing idk (need an ashton to clarify)
-                {
-                    //delete to test
-                    Destroy(hit.collider.gameObject);
-                }
-                else
-                {
-                    hit.collider.gameObject.transform.position = originalPos;
-                }
-                hit = new RaycastHit2D();
-            }
+            BeginDrag(pointerPosition);
         }
 
-        if (hit && isDragging) //get dragged
+        if (draggedCollider != null && mouse.leftButton.isPressed)
         {
-            hit.collider.gameObject.transform.position = worldPos;
+            draggedCollider.transform.position = (Vector3)pointerPosition + pointerOffset;
         }
+
+        if (draggedCollider != null && mouse.leftButton.wasReleasedThisFrame)
+        {
+            EndDrag(pointerPosition);
+        }
+    }
+
+    private void BeginDrag(Vector2 pointerPosition)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(pointerPosition, Vector2.zero, 0f, draggableLayer);
+        if (hit.collider == null)
+        {
+            return;
+        }
+
+        draggedCollider = hit.collider;
+        originalPosition = draggedCollider.transform.position;
+        pointerOffset = originalPosition - (Vector3)pointerPosition;
+    }
+
+    private void EndDrag(Vector2 pointerPosition)
+    {
+        Collider2D ingredient = draggedCollider;
+        draggedCollider = null;
+
+        RaycastHit2D targetHit = Physics2D.Raycast(pointerPosition, Vector2.zero, 0f, dropTargetLayer);
+        if (targetHit.collider == null)
+        {
+            ingredient.transform.position = originalPosition;
+            return;
+        }
+
+        if (snapToTarget)
+        {
+            Vector3 targetPosition = targetHit.collider.bounds.center;
+            targetPosition.z = ingredient.transform.position.z;
+            ingredient.transform.position = targetPosition;
+        }
+
+        IngredientDropped?.Invoke(ingredient.gameObject, targetHit.collider);
+    }
+
+    private void OnDisable()
+    {
+        CancelDrag();
+    }
+
+    public void CancelDrag()
+    {
+        if (draggedCollider == null)
+        {
+            return;
+        }
+
+        draggedCollider.transform.position = originalPosition;
+        draggedCollider = null;
     }
 }
