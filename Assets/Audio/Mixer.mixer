@@ -48,7 +48,13 @@ AudioMixerController:
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters: []
+  m_ExposedParameters:
+  - guid: 011b906a264a81d4180f62a92091a124
+    name: BGM
+  - guid: dfb32423dd42a2141a87ed99d626115f
+    name: Master
+  - guid: 3ad43e7d77f37454e83ac9f608b7bf15
+    name: SFX
   m_AudioMixerGroupViews:
   - guids:
     - 4fb8a219b6621d14e901f4f323c68aa1
@@ -101,7 +107,8 @@ AudioMixerSnapshotController:
   m_Name: Snapshot
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: c9dfd4f7092ef394a849d280a1f65830
-  m_FloatValues: {}
+  m_FloatValues:
+    dfb32423dd42a2141a87ed99d626115f: 0
   m_TransitionOverrides: {}
 --- !u!244 &6643873945799017338
 AudioMixerEffectController:
