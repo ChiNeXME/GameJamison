@@ -15,4 +15,4 @@ MonoBehaviour:
   CharacterPortrait: {fileID: 0}
   npcId: 3
   Name: Jian
-  TextSFX: {fileID: 8300000, guid: 3f5338e71a9d1a64b8a4b51ba5ca3507, type: 3}
+  TextSFX: {fileID: 8300000, guid: 09fb9af3cd4b1e849908c56757c6fec2, type: 3}

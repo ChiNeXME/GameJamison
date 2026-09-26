@@ -102,11 +102,14 @@ public class DialogueManager : MonoBehaviour
             {
                 talking += dialogue[i];
                 text.text = talking;
-                AS.PlayOneShot(TalkSfx);
+                if (dialogue[i] != ' ')
+                    AS.PlayOneShot(TalkSfx);
+                    
                 if (dialogue[i] == ',' || dialogue[i] == '.') 
                     yield return new WaitForSeconds(0.2f);
                 else
                     yield return new WaitForSeconds(0.035f);
+                
             }
 
             yield return new WaitForSeconds(1f);
