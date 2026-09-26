@@ -297,9 +297,29 @@ public static class RecipeSceneSetup
         EnsureFolder("Assets/Data", "Customers");
 
         // Assets are only created when missing so later edits in the Inspector are kept.
+        CustomerCase lina = EnsureCase($"{CasesFolder}/01_Lina.asset", customerCase => customerCase.EditorSetup(
+            "Lina Chen",
+            "Lina ties the box with its faded ribbon. The mooncake cannot repair five silent years, but it gives her a reason to knock on her father's door.",
+            new CaseClue(RecipeCategory.Filling, RecipeChoice.RedBean,
+                "Lina stole warm red bean paste from her father's spoon.",
+                "Tutorial: Choose the filling Lina named directly.",
+                "Use red bean paste."),
+            new CaseClue(RecipeCategory.Centre, RecipeChoice.NoYolk,
+                "Her father left out the yolk she disliked.",
+                "Tutorial: Choose what her father deliberately left out.",
+                "Leave the centre empty."),
+            new CaseClue(RecipeCategory.Sweetness, RecipeChoice.LowSweetness,
+                "He reduced the sugar because he listened.",
+                "Tutorial: Match the sweetness to her memory.",
+                "Choose less sugar."),
+            new CaseClue(RecipeCategory.Finish, RecipeChoice.Osmanthus,
+                "A tiny osmanthus flower marked the cake as hers.",
+                "Tutorial: Finish the cake with her flower mark.",
+                "Finish with osmanthus.")));
+
         CustomerCase siblings = EnsureCase($"{CasesFolder}/03_MeiAndJian.asset", customerCase => customerCase.EditorSetup(
             "Mei & Jian",
-            "The mold shines. Mei and Jian recognise their grandmother's mooncake. Each of them had remembered a different half of it.",
+            "The mold glows, but its crack remains. The mooncake tastes almost like Grandmother's kitchen. Mei and Jian write down what remains together.",
             new CaseClue(RecipeCategory.Filling, RecipeChoice.Lotus,
                 "Mei ground lotus seeds beside Grandmother.",
                 "Hint: Think about which seeds were ground into the filling.",
@@ -317,29 +337,7 @@ public static class RecipeSceneSetup
                 "Hint: Recall the floral scent while the cakes cooled.",
                 "Finish with osmanthus.")));
 
-        CustomerCase kai = EnsureCase($"{CasesFolder}/01_Kai.asset", customerCase => customerCase.EditorSetup(
-            "Kai (SigmaKaito_GYATT)",
-            "The mold glows with far more drama than the situation deserves.\nLEGENDARY MOONCAKE   +9,999 RELATIONSHIP AURA",
-            new CaseClue(RecipeCategory.Filling, RecipeChoice.RedBean,
-                "Crimson main-character aura means the filling must be red. Somehow.",
-                "Hint: Their shared aura is apparently crimson.",
-                "Use red bean paste."),
-            new CaseClue(RecipeCategory.Centre, RecipeChoice.NoYolk,
-                "Egg yolks possess negative aura and would send the relationship to the shadow realm.",
-                "Hint: Yolks have negative aura. Allegedly.",
-                "Leave the centre empty."),
-            new CaseClue(RecipeCategory.Sweetness, RecipeChoice.RegularSweetness,
-                "Maximum sweetness counters bronze teammates, weak Wi-Fi, and household chores.",
-                "Hint: Kai wants it maxed. Full send.",
-                "Choose regular sugar."),
-            new CaseClue(RecipeCategory.Finish, RecipeChoice.Sesame,
-                "Sesame allegedly matches their freak at ninety-eight percent compatibility.",
-                "Hint: Remember the tiny-seed compatibility quiz.",
-                "Finish with sesame.")));
-
-        // Mei & Jian are the emotional finale, so they always come last.
-        // Slot 02 is free for the third customer.
-        return new[] { kai, siblings };
+        return new[] { lina, siblings };
     }
 
     private static void EnsureFolder(string parent, string name)

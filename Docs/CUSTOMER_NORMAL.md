@@ -1,92 +1,39 @@
 # Customer Case — The Two Halves of a Memory
 
-**Tone:** Warm, sincere, slightly wistful  
-**Customers:** Adult siblings Mei and Jian  
-**Story purpose:** Establish the emotional heart of the game and show that two conflicting memories can both be true.
+**Tone:** Warm, sincere, and bittersweet
 
-## Arrival
+**Customers:** Adult twins Mei and Jian, arriving separately
 
-Mei and Jian enter the bakery carrying their grandmother's damaged mooncake tin. They want the baker to recreate the mooncake she made every Mid-Autumn Festival, but they disagree about nearly every detail.
+**Story purpose:** Show that two incomplete memories can preserve something meaningful without perfectly restoring what has been lost.
 
-## Customer dialogue
+**Customer order:** Lina's guided tutorial comes first. Mei and Jian follow as the main story and unguided deduction.
 
-**Baker:** “You said this was your grandmother's recipe?”
+## Scene order
 
-**Mei:** “It was. She made the same mooncake every year.”
+1. Opening — the baker finds Artemis beside the dim moonlit window.
+2. Mei's arrival — on the first festival after Grandmother's death, Mei brings the damaged tin and describes the half of the recipe she remembers.
+3. Jian's arrival — Jian comes separately looking for the tin, admits he lost the written recipe, and supplies the missing memory.
+4. Deduction — Artemis reviews the collected clues and the player builds the mooncake.
+5. Wrong attempt — one contextual reaction plays, then the player retries immediately.
+6. Correct attempt — Grandmother's kitchen memory reveals that both twins helped with one recipe.
+7. Resolution — the cake tastes “almost” right; the twins accept that some details are gone and write down what remains together.
+8. Artemis's memory — Chang'e's words return; the moon brightens without becoming full and the mold's crack remains.
 
-**Jian:** “Then you should remember it had a yolk.”
+## Correct recipe
 
-**Mei:** “I remember Grandmother telling you not to eat the yolks before they reached the cakes.”
-
-**Jian:** “Because she let me place one in the middle. She called it our little moon.”
-
-**Mei:** “What I remember is grinding the lotus seeds with her. She barely added any sugar.”
-
-**Jian:** “Right. She said a mooncake shouldn't taste like a spoonful of syrup.”
-
-**Mei:** “And the smell...”
-
-**Jian:** “The flowers outside the kitchen?”
-
-**Mei:** “Osmanthus. She tucked a sprig behind my ear while the cakes cooled.”
-
-**Jian:** “I had forgotten that.”
-
-**Baker:** “Perhaps neither of you has the whole recipe.”
-
-Artemis looks from one sibling to the other, then toward the preparation counter.
-
-## Artemis's memory notes
-
-- “Mei ground lotus seeds beside Grandmother.”
-- “Only a little sugar—the filling should not taste like syrup.”
-- “Jian placed one little moon in the middle.”
-- “Osmanthus filled the kitchen while the cakes cooled.”
-
-## Puzzle solution
-
-| Recipe category | Correct choice | Story evidence |
+| Recipe category | Correct choice | Evidence |
 |---|---|---|
 | Filling | Lotus paste | Mei remembers grinding lotus seeds |
-| Centre | One salted egg yolk | Jian placed “one little moon” in the middle |
-| Sweetness | Low | Grandmother barely used sugar and disliked syrupy cakes |
-| Finish | Osmanthus | The siblings remember its scent in the kitchen |
+| Centre | One salted egg yolk | Jian placed Grandmother's “little moon” in the middle |
+| Sweetness | Low | Grandmother used one small spoonful so the lotus stayed clear |
+| Finish | Osmanthus | Mei remembers the flowers on Grandmother's sleeve and over the cakes |
 
-## Decoy choices
+## Implementation notes
 
-- Red bean filling
-- No yolk
-- Regular sweetness
-- Sesame finish
-
-## Wrong-answer feedback
-
-Only respond to one incorrect category at a time.
-
-- **Wrong filling:** Artemis paws the note about grinding lotus seeds.
-- **Wrong centre:** Artemis looks at the round yolk tray, then at the words “little moon.”
-- **Wrong sweetness:** Artemis tastes the mixture, recoils slightly, and highlights “shouldn't taste like syrup.”
-- **Wrong finish:** A breeze moves the osmanthus sprig beside the window.
-
-After a second failed attempt, Artemis adds a more direct thought beside one incorrect category.
-
-## Correct-recipe memory reveal
-
-The mold shines. The bakery fades into a warm illustrated memory.
-
-Young Mei sits beside Grandmother, struggling to grind soaked lotus seeds. Grandmother adds only a small spoonful of sugar and tells her that sweetness should help a flavour, not bury it. Across the table, young Jian carefully places one salted yolk into the centre of the filling. Grandmother calls it his little moon. Before pressing the cake, she crushes dried osmanthus over the surface.
-
-The memory widens: Mei and Jian are not making separate recipes. They are standing on opposite sides of the same table, each helping with a different step.
-
-## Resolution dialogue
-
-**Mei:** “I thought you were changing her recipe.”
-
-**Jian:** “I thought you had forgotten it.”
-
-**Mei:** “We both forgot half.”
-
-**Jian:** “Then next year, we make it together.”
-
-The siblings split the mooncake. Moonlight reaches farther across the bakery floor, and Artemis briefly remembers Chang'e placing the same mold into her hands.
-
+- The complete chronological script is in `Docs/Dialogue/00_FULL_SCRIPT.md`.
+- Every speaking or thinking character has a separate file in `Docs/Dialogue`.
+- Artemis never speaks aloud. Her lines appear as thoughts or notebook entries.
+- Mei and Jian must not enter together. Mei is already at the counter when Jian arrives later.
+- On a wrong recipe, play only the first incorrect category in this order: filling, centre, sweetness, finish.
+- On a second error in the same category, use Artemis's direct hint.
+- Dialogue remains skippable, and no story dialogue repeats after a failed recipe.
