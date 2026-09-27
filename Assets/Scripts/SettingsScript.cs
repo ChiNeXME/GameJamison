@@ -25,7 +25,7 @@ public class SettingsScript : MonoBehaviour
     public void SetMixer(string param,float value)
     {
         //value is 0 - 1
-        AM.SetFloat(param, Mathf.Log10(value) * 20); //if its 0, -80f, if its 1, -20f
+        AM.SetFloat(param, Mathf.Log10(value) * 20); //if its 0, -60f, if its 1, 0f
     }
     GameObject panel;
     bool isDuplicate;
@@ -96,9 +96,13 @@ public class SettingsScript : MonoBehaviour
         SetMixer("SFX", SFXVol);
 
         //set slider to it
-        MasterSlider.value = Mathf.Pow(10, MasterVol) / 20;
-        SFXSlider.value = Mathf.Pow(10, SFXVol)/ 20;
-        BGMSlider.value = Mathf.Pow(10, BGMVol)/ 20;
+        MasterSlider.value = Mathf.Pow(10, MasterVol/ 20);
+        SFXSlider.value = Mathf.Pow(10, SFXVol / 20);
+        BGMSlider.value = Mathf.Pow(10, BGMVol / 20);
+
+
+        //dB = log10(linear) * 20, reverse is linear = 10^(dB / 20)
+
 
         MasterSlider.onValueChanged.AddListener((float val) =>
         {
