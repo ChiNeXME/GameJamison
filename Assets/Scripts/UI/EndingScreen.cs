@@ -106,6 +106,17 @@ namespace TheLastMooncake.UI
             }
         }
 
+        // The BGM player survives scene loads, so the ending track must be stopped here.
+        private static void StopMusic()
+        {
+            AudioSource music = GlobalBGMPlayer.instance != null ? GlobalBGMPlayer.instance.GetComponent<AudioSource>() : null;
+            if (music != null)
+            {
+                music.Stop();
+                music.clip = null;
+            }
+        }
+
         private static void SetVisible(CanvasGroup group, float alpha)
         {
             if (group == null)
@@ -120,11 +131,13 @@ namespace TheLastMooncake.UI
 
         public void PlayAgain()
         {
+            StopMusic();
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
         public void ReturnToTitle()
         {
+            StopMusic();
             SceneManager.LoadScene(titleSceneName);
         }
     }

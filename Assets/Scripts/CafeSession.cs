@@ -26,6 +26,8 @@ namespace TheLastMooncake.Flow
         [Header("Story")]
         [SerializeField] private Conversation opening = null;
         [SerializeField] private Conversation ending = null;
+        [Tooltip("Plays once from the start of the ending scene through the credits.")]
+        [SerializeField] private AudioClip endingMusic = null;
 
         [Header("UI")]
         [SerializeField] private TextMeshProUGUI customerLabel = null;
@@ -153,8 +155,30 @@ namespace TheLastMooncake.Flow
                 yield break;
             }
 
+            PlayEndingMusic();
             yield return Talk(new[] { ending });
             flow.ShowEnding();
+        }
+
+        private void PlayEndingMusic()
+        {
+            if (endingMusic == null)
+            {
+                return;
+            }
+
+            // Use the persistent BGM player (routed through the music mixer) when the game
+            // started from the main menu; otherwise play it here.
+            AudioSource music = GlobalBGMPlayer.instance != null ? GlobalBGMPlayer.instance.GetComponent<AudioSource>() : null;
+            if (music == null)
+            {
+                music = gameObject.AddComponent<AudioSource>();
+            }
+
+            music.Stop();
+            music.clip = endingMusic;
+            music.loop = false;
+            music.Play();
         }
 
         private void HandleFirstMistake(RecipeCategory category)

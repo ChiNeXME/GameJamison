@@ -26,6 +26,7 @@ public static class DialogueImporter
     private const string SpeakerFolder = "Assets/Scripts/Customers/CustomerStorage";
     private const string OldGrandmotherPrefab = "Assets/UI/Portraits/GrandmaImage.prefab";
     private const string KitchenArt = "Assets/Art/Backgrounds/BG.png";
+    private const string EndingMusic = "Assets/BGM/ending.mp3";
     private const string EndingArt = "Assets/Art/Cutscenes/EndingCutscene.png";
     private const string CasesFolder = "Assets/Data/Customers";
 
@@ -498,6 +499,7 @@ public static class DialogueImporter
         serializedSession.FindProperty("DM").objectReferenceValue = dialogue;
         serializedSession.FindProperty("opening").objectReferenceValue = opening;
         serializedSession.FindProperty("ending").objectReferenceValue = ending;
+        serializedSession.FindProperty("endingMusic").objectReferenceValue = AssetDatabase.LoadAssetAtPath<AudioClip>(EndingMusic);
         SerializedProperty caseList = serializedSession.FindProperty("cases");
         caseList.arraySize = cases.Length;
         for (int index = 0; index < cases.Length; index++)

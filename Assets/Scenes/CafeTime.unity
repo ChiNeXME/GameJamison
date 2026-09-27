@@ -10266,6 +10266,7 @@ MonoBehaviour:
   - {fileID: 1175225906}
   opening: {fileID: 11400000, guid: 9baabf426172ad343abcf780699af9bd, type: 2}
   ending: {fileID: 11400000, guid: a959fa3e3f7f0c04dbc46d15e4f43937, type: 2}
+  endingMusic: {fileID: 8300000, guid: 57ae337278084144ba64ea0a42d4e75c, type: 3}
   customerLabel: {fileID: 1077065595}
   resolutionPanel: {fileID: 2061985947}
   resolutionText: {fileID: 93625890}
