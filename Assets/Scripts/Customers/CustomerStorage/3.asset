@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 3
   m_EditorClassIdentifier: Assembly-CSharp::Customer
   CharacterPortrait: {fileID: 8481559752484358386, guid: 7bfba8722aad88e44ba25c53981795f9, type: 3}
+  OpenMouthPortrait: {fileID: 8481559752484358386, guid: a6b855280a776624992cc722d0e29908, type: 3}
   npcId: 3
   Name: Jian
   TextSFX: {fileID: 8300000, guid: 09fb9af3cd4b1e849908c56757c6fec2, type: 3}

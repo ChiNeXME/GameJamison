@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 4
   m_EditorClassIdentifier: Assembly-CSharp::Customer
   CharacterPortrait: {fileID: 8481559752484358386, guid: 58cb263783224dd4b8c976e12ad7b4ca, type: 3}
+  OpenMouthPortrait: {fileID: 8481559752484358386, guid: 093ef35865e81d6438ebe95b9f871e62, type: 3}
   npcId: 4
   Name: Lina
   TextSFX: {fileID: 8300000, guid: a46f67b24d511e44f9074e5e1eea7943, type: 3}

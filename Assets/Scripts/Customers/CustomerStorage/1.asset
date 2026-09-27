@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 1
   m_EditorClassIdentifier: Assembly-CSharp::Customer
   CharacterPortrait: {fileID: 8481559752484358386, guid: dbe0181670d18104c8cfd58afeb390b2, type: 3}
+  OpenMouthPortrait: {fileID: 8481559752484358386, guid: a62436dff9e6b1845a3432a934bdc385, type: 3}
   npcId: 1
   Name: Baker
   TextSFX: {fileID: 8300000, guid: 1ef499dcf54fd7149bc34f6fb4a4fcc2, type: 3}

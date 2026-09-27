@@ -137,7 +137,7 @@ public class DialogueManager : MonoBehaviour
             isTalking = false;
             if (SkipDialogue)
                 yield return null;
-            //yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.2f);
             yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
             yield return null;
         }
