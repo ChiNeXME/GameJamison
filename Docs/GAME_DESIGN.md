@@ -55,14 +55,15 @@ One complete emotional story is better than several unfinished stories. Reuse in
 ### Target experience
 
 - **Format:** single-player, linear, in-place narrative deduction game
-- **Target length:** 10–15 minutes
+- **Target length:** 15–20 minutes
 - **Primary input:** keyboard and mouse; controller support only if inexpensive
 - **Location:** one bakery counter and mooncake preparation screen
-- **Main story:** one strained sibling relationship
+- **Tutorial story:** Lina prepares to reconnect with her estranged father
+- **Main story:** one strained twin relationship
 - **Main recipe:** grandmother's mooncake
-- **Ending:** bake and share the restored recipe; recover one memory of Chang'e
+- **Ending:** bake and share an imperfect reconstruction; preserve what remains and recover one memory of Chang'e
 
-This is a vertical slice of the larger story. Additional customers belong to a post-jam version.
+This is a vertical slice with one short guided customer followed by the complete sibling story. Additional customers belong to a post-jam version.
 
 ### MVP — must exist
 
@@ -150,11 +151,11 @@ The jam build contains one complete version of this loop: the two siblings and t
 
 The Mid-Autumn moon is unusually dim. Artemis sleeps behind an elderly baker's shop, apparently an ordinary stray. When the baker presses dough into an old damaged mold, moonlight flickers through it and awakens a fragment of Artemis's memory.
 
-Two adult siblings arrive to collect the last order their grandmother used to make. They argue about the recipe. One insists it was lotus paste and never overly sweet; the other remembers placing a salted yolk—"the moon"—in its centre. The baker no longer has the complete recipe.
+After tutorial customer Lina leaves, adult twins Mei and Jian arrive separately on the first Mid-Autumn Festival after their grandmother's death. Mei brings the damaged tin and recalls the lotus filling, low sweetness, and osmanthus scent. Jian arrives later looking for the tin and admits he lost the written recipe while clearing their grandmother's home. He remembers placing a salted yolk—"the moon"—in its centre. Their accounts form the best reconstruction still possible, though some details are gone.
 
 ### Story clues
 
-Because Artemis cannot speak, she listens from the counter while the siblings tell the baker what they remember. Their dialogue communicates:
+Because Artemis cannot speak, she listens from the counter as each twin tells the baker what they remember during separate arrivals. Their dialogue communicates:
 
 | Clue | Location | Information communicated |
 |---|---|---|
@@ -173,9 +174,9 @@ Artemis brings or reveals the clues to the baker. The player assembles:
 - Low sweetness
 - Osmanthus finish
 
-When the mooncake is pressed, the damaged mold briefly becomes whole. The siblings recognize their grandmother's cake, share it, and remember making it together. A memory shows Chang'e entrusting the mold to Artemis and asking her to protect what it represents.
+When the mooncake is pressed, the damaged mold glows but does not become whole. The twins share the cake and agree that it tastes “almost” like their grandmother's kitchen. They accept that the past cannot be perfectly recovered and write down what they remember together. A memory shows Chang'e teaching Artemis that remembrance means carrying what remains while accepting what is missing.
 
-The moon brightens. Artemis is offered no grand transformation in the jam build; instead, the baker places a tiny cat-shaped mooncake on the windowsill. Artemis takes one bite. Fade to title and credits.
+The moon brightens without becoming completely full. The baker places a tiny cat-shaped mooncake on the windowsill. Artemis takes one bite as the mold continues to glow with its crack still visible. Fade to title and credits.
 
 ### Narrative rule
 
@@ -234,8 +235,8 @@ Moonlight communicates narrative progress:
 
 - Opening: cool, faint moon; bakery mostly warm artificial light
 - Each clue: a small pulse through the mold and slightly stronger moonbeam
-- Correct recipe: mold pattern completes in light
-- Ending: full moonlight reaches the bakery and connects the rooms visually
+- Correct recipe: mold pattern glows around its still-visible crack
+- Ending: brighter but incomplete moonlight reaches the bakery
 
 This is presentation feedback, not a countdown. The player cannot run out of time.
 
@@ -266,8 +267,16 @@ A handcrafted autumn picture-book look: warm bakery interiors against cool blue-
 
 1. Artemis silhouette and readable cat animation
 2. Baker portrait or simple in-world character
-3. Two sibling portraits or economical character rigs
-4. Chang'e memory silhouette
+3. Lina portrait
+4. Mei portrait or economical character rig
+5. Jian portrait or economical character rig
+6. Chang'e memory silhouette
+
+### Customer character descriptions
+
+- **Lina Chen:** The first customer and guided tutorial. A quietly confident Chinese florist in her mid-twenties who has returned home after five years away. She has burgundy hair, green eyes, an osmanthus hair clip, a rust blouse, and a deep-green apron dress. She carries a square golden-brown mooncake box tied with a yellow ribbon. Her story teaches all four recipe controls in order before she takes the cake to her estranged father's door.
+- **Mei:** One of a pair of adult Chinese twins. She is composed and practical, with shoulder-length dark hair, a muted teal blouse, rust cardigan, and the family's damaged mooncake tin held carefully in both hands. She arrives alone, protective of the memory she believes Jian has neglected.
+- **Jian:** Mei's twin brother. He shares her eyes and face shape without looking identical, and has tousled dark hair, an ochre overshirt, and a blue-grey shirt. He arrives separately, earnest and slightly defensive, looking for the family tin and unaware that Mei is already inside.
 
 If character animation capacity is limited, use portrait dialogue and reserve in-world animation for Artemis and the final sharing gesture.
 
@@ -280,7 +289,7 @@ If character animation capacity is limited, use portrait dialogue and reserve in
 - Centre and sweetness controls, including clear selected states
 - Damaged and illuminated mold
 - Three clue close-ups
-- Baker and sibling portraits
+- Baker, Lina, Mei, and Jian portraits
 - Mooncake assembly UI
 - Ending illustration or staged scene
 
@@ -394,7 +403,7 @@ Critical success criteria:
 | Puzzle becomes guessing | Testers cannot connect clues to choices | Rewrite clues and visually pair them with recipe categories |
 | Cooking grows into several minigames | Each step needs new controls and UI | Keep assembly as one evidence puzzle; use baking as presentation |
 | Art workload explodes | Multiple detailed humans require full rigs | Use portraits or still illustrations for humans |
-| Ending lacks impact | Moon brightens without a human change | Prioritize the siblings sharing the cake and speaking honestly |
+| Ending lacks impact | Moon brightens without a human change | Prioritize the twins accepting the imperfect result, speaking honestly, and writing the surviving recipe together |
 
 ---
 
@@ -428,7 +437,10 @@ Record meaningful changes here so the team knows what was deliberately changed.
 
 | Date | Decision | Reason |
 |---|---|---|
-| 25 Sep 2026 | Scope the jam build to one sibling story and one complete recipe | Protect polish and ensure a full emotional arc |
+| 25 Sep 2026 | Scope the emotional core to one sibling story | Protect polish and ensure a full emotional arc |
 | 25 Sep 2026 | Use Roots as family, cultural, and personal memory | Integrates the jam theme directly into story and puzzle |
 | 25 Sep 2026 | Make cooking an evidence-selection puzzle | Keeps narrative and mechanics unified without excessive minigames |
 | 25 Sep 2026 | Use physical dragging only for tangible ingredients; use controls for omissions and amounts | Avoids representing “no yolk” and sweetness levels as draggable objects |
+| 26 Sep 2026 | Cut the unused extra customer and have twins Mei and Jian arrive separately | Focus the jam build on one emotional story while giving each twin an independent entrance and voice |
+| 27 Sep 2026 | Add Lina as the first, fully guided customer | Teach all four recipe controls before the unguided twins puzzle |
+| 27 Sep 2026 | Keep the twins' resolution bittersweet and incomplete | Let remembrance preserve what remains without pretending the past can be restored perfectly |

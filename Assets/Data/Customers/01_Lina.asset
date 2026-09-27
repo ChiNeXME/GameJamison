@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86f6b1eac22e9e74594b8c753c27087c, type: 3}
+  m_Name: 01_Lina
+  m_EditorClassIdentifier: Assembly-CSharp::TheLastMooncake.Customers.CustomerCase
+  customerName: Lina Chen
+  clues:
+  - category: 0
+    answer: 2
+    memoryNote: Lina stole warm red bean paste from her father's spoon.
+    hint: 'Tutorial: Choose the filling Lina named directly.'
+    correction: Use red bean paste.
+  - category: 1
+    answer: 4
+    memoryNote: Her father left out the yolk she disliked.
+    hint: 'Tutorial: Choose what her father deliberately left out.'
+    correction: Leave the centre empty.
+  - category: 2
+    answer: 5
+    memoryNote: He reduced the sugar because he listened.
+    hint: 'Tutorial: Match the sweetness to her memory.'
+    correction: Choose less sugar.
+  - category: 3
+    answer: 7
+    memoryNote: A tiny osmanthus flower marked the cake as hers.
+    hint: 'Tutorial: Finish the cake with her flower mark.'
+    correction: Finish with osmanthus.
+  resolutionSummary: Lina ties the box with its faded ribbon. The mooncake cannot
+    repair five silent years, but it gives her a reason to knock on her father's door.
