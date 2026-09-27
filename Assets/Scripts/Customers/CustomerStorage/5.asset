@@ -16,4 +16,4 @@ MonoBehaviour:
   OpenMouthPortrait: {fileID: 0}
   npcId: 5
   Name: Artemis
-  TextSFX: {fileID: 0}
+  TextSFX: {fileID: 8300000, guid: 42ab44fd23730904084715ae2f26157a, type: 3}

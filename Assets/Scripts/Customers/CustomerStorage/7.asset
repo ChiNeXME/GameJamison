@@ -16,4 +16,4 @@ MonoBehaviour:
   OpenMouthPortrait: {fileID: 0}
   npcId: 7
   Name: Chang'e
-  TextSFX: {fileID: 0}
+  TextSFX: {fileID: 8300000, guid: 505d6d24ad8e49d488822a4a4be61060, type: 3}
