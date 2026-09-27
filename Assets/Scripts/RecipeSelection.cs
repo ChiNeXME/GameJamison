@@ -31,7 +31,21 @@ namespace TheLastMooncake.Recipe
 
         public bool TryGetChoice(RecipeCategory category, out RecipeChoice choice)
         {
-            return choices.TryGetValue(category, out choice);
+            if (choices.TryGetValue(category, out choice))
+            {
+                return true;
+            }
+
+            choice = DefaultChoice(category);
+            return choice != RecipeChoice.None;
+        }
+
+        /// <summary>
+        /// The centre has no "leave empty" control: without a yolk it simply counts as empty.
+        /// </summary>
+        public static RecipeChoice DefaultChoice(RecipeCategory category)
+        {
+            return category == RecipeCategory.Centre ? RecipeChoice.NoYolk : RecipeChoice.None;
         }
 
         public bool SelectChoice(RecipeCategory category, RecipeChoice choice)
@@ -60,7 +74,7 @@ namespace TheLastMooncake.Recipe
 
             choices.Clear();
             RecipeChanged?.Invoke(RecipeCategory.Filling, RecipeChoice.None);
-            RecipeChanged?.Invoke(RecipeCategory.Centre, RecipeChoice.None);
+            RecipeChanged?.Invoke(RecipeCategory.Centre, DefaultChoice(RecipeCategory.Centre));
             RecipeChanged?.Invoke(RecipeCategory.Sweetness, RecipeChoice.None);
             RecipeChanged?.Invoke(RecipeCategory.Finish, RecipeChoice.None);
         }
@@ -83,7 +97,7 @@ namespace TheLastMooncake.Recipe
                 if (wasSelected)
                 {
                     choices.Remove(option.Category);
-                    RecipeChanged?.Invoke(option.Category, RecipeChoice.None);
+                    RecipeChanged?.Invoke(option.Category, DefaultChoice(option.Category));
                 }
 
                 return;

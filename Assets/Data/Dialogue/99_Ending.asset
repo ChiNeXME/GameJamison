@@ -65,7 +65,7 @@ MonoBehaviour:
     speakerName: 
     panelImage: {fileID: 0}
   - text: Artemis takes a bite. The moon grows brighter, but does not become full.
-      The mold glows while its crack remains visible. Fade to title and credits.
+      The mold glows while its crack remains visible.
     npcId: 0
     style: 3
     speakerName: 

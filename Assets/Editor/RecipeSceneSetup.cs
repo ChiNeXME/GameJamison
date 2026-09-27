@@ -63,6 +63,8 @@ public static class RecipeSceneSetup
         SetObjectReference(feedback, "selection", selection);
 
         ConfigureChoiceButton(objects, "LeaveEmptyButton", selection, RecipeCategory.Centre, RecipeChoice.NoYolk);
+        // No "leave empty" control: a centre without a yolk already counts as empty.
+        RequireObject(objects, "CentreControls").SetActive(false);
         ConfigureChoiceButton(objects, "LessSugarButton", selection, RecipeCategory.Sweetness, RecipeChoice.LowSweetness);
         ConfigureChoiceButton(objects, "RegularSugarButton", selection, RecipeCategory.Sweetness, RecipeChoice.RegularSweetness);
         ConfigureSubmitButton(objects, "SubmitRecipeButton", validator);

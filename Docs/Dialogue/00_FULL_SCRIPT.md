@@ -436,4 +436,4 @@ Play one applicable branch, then return to the recipe board.
 
 **[S8-09 | Artemis — thought]** The past does not return. It leaves us enough light to follow.
 
-**[S8-10 | Stage]** Artemis takes a bite. The moon grows brighter, but does not become full. The mold glows while its crack remains visible. Fade to title and credits.
+**[S8-10 | Stage]** Artemis takes a bite. The moon grows brighter, but does not become full. The mold glows while its crack remains visible.

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: 00_Opening
   m_EditorClassIdentifier: Assembly-CSharp::Conversation
   showPanel: 1
-  panelImage: {fileID: 0}
+  panelImage: {fileID: 21300000, guid: 35f6a53911a2b6845a9408cfc4553483, type: 3}
   panelColor: {r: 0.06, g: 0.07, b: 0.13, a: 1}
-  panelTitle: Mid-Autumn Night
+  panelTitle: 
   Lines:
   - text: The Mid-Autumn moon hangs pale behind the bakery window. The Baker discovers
       Artemis curled beside an old, cracked mooncake mold.

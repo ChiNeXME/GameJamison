@@ -26,6 +26,7 @@ public static class DialogueImporter
     private const string SpeakerFolder = "Assets/Scripts/Customers/CustomerStorage";
     private const string OldGrandmotherPrefab = "Assets/UI/Portraits/GrandmaImage.prefab";
     private const string KitchenArt = "Assets/Art/Backgrounds/BG.png";
+    private const string OpeningArt = "Assets/Art/Backgrounds/Mid-Autumn.png";
     private const string EndingMusic = "Assets/BGM/ending.mp3";
     private const string EndingArt = "Assets/Art/Cutscenes/EndingCutscene.png";
     private const string CasesFolder = "Assets/Data/Customers";
@@ -65,7 +66,8 @@ public static class DialogueImporter
 
         // Opening and ending.
         Conversation opening = Build("00_Opening", script, id => id.StartsWith("S1-"));
-        SetPanel(opening, NightPanel, "Mid-Autumn Night");
+        SetPanel(opening, NightPanel, string.Empty);
+        opening.panelImage = LoadSprite(OpeningArt);
         Conversation ending = Build("99_Ending", script, id => id.StartsWith("S8-"));
         SetPanel(ending, NightPanel, "A memory of the moon");
         SetPanelImageFrom(ending, "S8-07", endingSprite, script);
