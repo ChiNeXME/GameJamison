@@ -84,7 +84,11 @@ public static class RecipeSceneSetup
 
         EditorSceneManager.MarkSceneDirty(scene);
         EditorSceneManager.SaveScene(scene);
-        CreateMainMenuScene();
+        if (AssetDatabase.LoadAssetAtPath<SceneAsset>(MainMenuScenePath) == null)
+        {
+            CreateMainMenuScene();
+        }
+
         EditorBuildSettings.scenes = new[]
         {
             new EditorBuildSettingsScene(MainMenuScenePath, true),
