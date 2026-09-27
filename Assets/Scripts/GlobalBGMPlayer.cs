@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class GlobalSFXPlayer : MonoBehaviour
+public class GlobalBGMPlayer : MonoBehaviour
 {
-    public static GlobalSFXPlayer instance;
+    public static GlobalBGMPlayer instance;
     void Awake()
     {
         if (instance == null)

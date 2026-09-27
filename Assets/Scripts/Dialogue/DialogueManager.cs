@@ -2,6 +2,9 @@
 using UnityEngine;
 using System.Collections;
 using TMPro;
+using System;
+using System.Runtime.CompilerServices;
+using UnityEngine.InputSystem;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -9,7 +12,7 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI TextDisplay;
     public GameObject TextBox;
     public AudioClip TalkSfx;
-    public AudioSource AS;
+    AudioSource AS;
     bool doLerp = false;
     Vector3 OgPos;
     Vector3 TargetPos;
@@ -20,6 +23,7 @@ public class DialogueManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        AS = GameObject.Find("SFXPlayer").GetComponent<AudioSource>();
         rectTransform = TextBox.GetComponent<RectTransform>();
     }
 
@@ -35,17 +39,19 @@ public class DialogueManager : MonoBehaviour
 
     public void Drop() //test for dialogue
     {
+        t = 0;
         StartCoroutine(DropDialogueBox());
     }
     public void Rise() //test for dialogue
     {
+        t = 0;
         TextBox.SetActive(true);
         StartCoroutine(RiseDialogueBox());
     }
 
-    public void Conversation1Test(Conversation Convo1) //test for dialogue
+    public Coroutine ConversationStart(Conversation Convo) //test for dialogue
     {
-        StartCoroutine(TalkConversation(Convo1, TextDisplay));
+        return StartCoroutine(TalkConversation(Convo, TextDisplay));
     }
 
     IEnumerator RiseDialogueBox()
@@ -73,38 +79,31 @@ public class DialogueManager : MonoBehaviour
         TextBox.SetActive(false);
         t = 0f;
     }
-    IEnumerator Talk(string dialogue, TextMeshProUGUI text)
-    {
-        string talking = "";
-        for (int i = 0; i < dialogue.Length; i++)
-        {
-            talking += dialogue[i];
-            text.text = talking;
-            AS.PlayOneShot(TalkSfx);
-            if (dialogue[i] == ',' || dialogue[i] == '.') 
-                yield return new WaitForSeconds(0.2f);
-            else
-                yield return new WaitForSeconds(0.035f);
-        }
-
-        yield return new WaitForSeconds(1f);
-    }
 
     IEnumerator TalkConversation(Conversation Convo, TextMeshProUGUI text)
     {
         for (int z = 0; z < Convo.Lines.Count; z++)
         {
+            bool Skip = false;
+
             TalkSfx = CM.FindNPC(Convo.Lines[z].npcId).TextSFX;
             string dialogue = CM.FindNPC(Convo.Lines[z].npcId).Name + ": ";
             dialogue += Convo.Lines[z].text;
             string talking = "";
+
             for (int i = 0; i < dialogue.Length; i++)
             {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    text.text = dialogue;
+                    Skip = true;
+                    break;
+                }
                 talking += dialogue[i];
                 text.text = talking;
                 if (dialogue[i] != ' ')
                     AS.PlayOneShot(TalkSfx);
-                    
+
                 if (dialogue[i] == ',' || dialogue[i] == '.') 
                     yield return new WaitForSeconds(0.2f);
                 else
@@ -112,11 +111,11 @@ public class DialogueManager : MonoBehaviour
                 
             }
 
-            yield return new WaitForSeconds(1f);
+            if (Skip)
+                yield return null;
+            //yield return new WaitForSeconds(0.2f);
+            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
+            yield return null;
         }
-    }
-    public void TypewriterEffect(string dialogue, TextMeshProUGUI text)
-    {
-        StartCoroutine(Talk(dialogue, text));
     }
 }

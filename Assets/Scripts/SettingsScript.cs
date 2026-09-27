@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -12,9 +13,13 @@ public class SettingsScript : MonoBehaviour
     [SerializeField] private Slider SFXSlider;
     [SerializeField] private Slider BGMSlider;
 
+    [SerializeField] private TextMeshProUGUI AutoNotesText;
+
     float MasterVol;
     float BGMVol;
     float SFXVol;
+    int IsAutoNotesOn;
+    public bool IsAutoNotesOnBool;
     public void SetMixer(string param,float value)
     {
         //value is 0 - 1
@@ -26,15 +31,26 @@ public class SettingsScript : MonoBehaviour
         MasterVol = PlayerPrefs.GetFloat("MasterVolume", 0.5f);
         BGMVol = PlayerPrefs.GetFloat("BGMVolume", 1f);
         SFXVol = PlayerPrefs.GetFloat("BGMVolume", 1f);
+        IsAutoNotesOn = PlayerPrefs.GetInt("EnableAutoNotes", 1); //1 = yes, 0 = no
+
+        if (IsAutoNotesOn == 1)
+        {
+            AutoNotesText.text = "Yes";
+            IsAutoNotesOnBool = true;
+        }
+        else
+        {
+            IsAutoNotesOnBool = false;
+            AutoNotesText.text = "Off";
+        }
+
         //set the mixer cause it saves or smth
         SetMixer("Master", MasterVol);
         SetMixer("BGM", BGMVol);
         SetMixer("SFX", SFXVol);
 
         //set slider to it
-        Debug.Log(MasterSlider.value);
         MasterSlider.value = Mathf.Pow(10, MasterVol) / 20;
-        Debug.Log(Mathf.Pow(10, MasterVol)/20);
         SFXSlider.value = Mathf.Pow(10, SFXVol)/ 20;
         BGMSlider.value = Mathf.Pow(10, BGMVol)/ 20;
 
@@ -55,6 +71,8 @@ public class SettingsScript : MonoBehaviour
             SetMixer("BGM", val);
             PlayerPrefs.SetFloat("BGMVolume", val);
         });
+
+        gameObject.SetActive(false); //done loading it all, now it makes it invis
     }
 
     void OnDisable()
@@ -83,5 +101,22 @@ public class SettingsScript : MonoBehaviour
             SetMixer("BGM", val);
             PlayerPrefs.SetFloat("BGMVolume", val);
         });
+    }
+
+    public void AutoNotesButtonPressed()
+    {
+        if (IsAutoNotesOn == 1)
+        {
+            IsAutoNotesOn = 0;
+            IsAutoNotesOnBool = false;
+            AutoNotesText.text = "Off";
+        }
+        else
+        {
+            IsAutoNotesOn = 1;
+            IsAutoNotesOnBool = true;
+            AutoNotesText.text = "On";
+        }
+        PlayerPrefs.SetInt("EnableAutoNotes", IsAutoNotesOn);
     }
 }

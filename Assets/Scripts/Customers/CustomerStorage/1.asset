@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Customer
   CharacterPortrait: {fileID: 0}
   npcId: 1
-  Name: Artemis
+  Name: Baker
   TextSFX: {fileID: 8300000, guid: 1ef499dcf54fd7149bc34f6fb4a4fcc2, type: 3}

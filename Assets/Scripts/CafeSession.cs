@@ -3,6 +3,7 @@ using TMPro;
 using TheLastMooncake.Customers;
 using TheLastMooncake.Recipe;
 using UnityEngine;
+using System.Collections;
 
 namespace TheLastMooncake.Flow
 {
@@ -12,6 +13,8 @@ namespace TheLastMooncake.Flow
     /// </summary>
     public sealed class CafeSession : MonoBehaviour
     {
+        [SerializeField] private DialogueHolder dialogueHolder;
+        [SerializeField] private DialogueManager DM;    
         [SerializeField] private CustomerCase[] cases = Array.Empty<CustomerCase>();
         [SerializeField] private GameFlowController flow = null;
         [SerializeField] private RecipeSelection selection = null;
@@ -25,6 +28,7 @@ namespace TheLastMooncake.Flow
         [SerializeField] private GameObject resolutionPanel = null;
         [SerializeField] private TextMeshProUGUI resolutionText = null;
         [SerializeField] private TextMeshProUGUI continueLabel = null;
+        
 
         private int caseIndex = -1;
         private int inputBlocks;
@@ -62,14 +66,14 @@ namespace TheLastMooncake.Flow
                 return;
             }
 
-            StartCase(0);
+            PreCase(0, 0);
         }
 
         public void ContinueToNextCase()
         {
             if (caseIndex + 1 < cases.Length)
             {
-                StartCase(caseIndex + 1);
+                PreCase(caseIndex+1, caseIndex+1);
                 return;
             }
 
@@ -122,6 +126,20 @@ namespace TheLastMooncake.Flow
             RefreshInput();
             flow.MakeRecipeAvailable();
             CaseStarted?.Invoke(customerCase);
+        }
+
+        public void PreCase(int ConvoIndex, int Index)
+        {
+            StartCoroutine(PreCaseRoutine(ConvoIndex, Index));
+        }
+
+        private IEnumerator PreCaseRoutine(int ConvoIndex, int Index)
+        {
+            DM.Rise();
+            Conversation Convo = dialogueHolder.conversations[ConvoIndex];
+            yield return DM.ConversationStart(Convo);
+            DM.Drop();
+            StartCase(Index);
         }
 
         private void HandleRecipeCorrect()
