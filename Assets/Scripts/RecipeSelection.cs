@@ -18,6 +18,7 @@ namespace TheLastMooncake.Recipe
             if (dragDrop != null)
             {
                 dragDrop.IngredientDropped += HandleIngredientDropped;
+                dragDrop.IngredientDroppedOutside += HandleIngredientDroppedOutside;
             }
         }
 
@@ -26,6 +27,7 @@ namespace TheLastMooncake.Recipe
             if (dragDrop != null)
             {
                 dragDrop.IngredientDropped -= HandleIngredientDropped;
+                dragDrop.IngredientDroppedOutside -= HandleIngredientDroppedOutside;
             }
         }
 
@@ -112,6 +114,20 @@ namespace TheLastMooncake.Recipe
             }
 
             SetChoice(option.Category, option.Choice);
+        }
+
+        // Dragging a placed ingredient off the board takes it back out of the recipe.
+        private void HandleIngredientDroppedOutside(GameObject ingredientObject)
+        {
+            RecipeOption option = ingredientObject.GetComponentInParent<RecipeOption>();
+            if (option == null || option.CurrentTarget == null)
+            {
+                return;
+            }
+
+            option.ResetToHome();
+            choices.Remove(option.Category);
+            RecipeChanged?.Invoke(option.Category, DefaultChoice(option.Category));
         }
 
         private RecipeDropTarget FindTarget(RecipeCategory category)

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08b9fee2104a4644393a0ca4ffc6aa5e, type: 3}
   m_Name: 7
   m_EditorClassIdentifier: Assembly-CSharp::Customer
-  CharacterPortrait: {fileID: 0}
-  OpenMouthPortrait: {fileID: 0}
+  CharacterPortrait: {fileID: 8592457805488680315, guid: 6582bf76fbc7cdf49887b5fde2bf17ea, type: 3}
+  OpenMouthPortrait: {fileID: 4904801872240025654, guid: 21aa9fa369c44694f96e0d2de5148c27, type: 3}
   npcId: 7
   Name: Chang'e
   TextSFX: {fileID: 8300000, guid: 505d6d24ad8e49d488822a4a4be61060, type: 3}

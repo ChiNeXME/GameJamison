@@ -145,6 +145,12 @@ namespace TheLastMooncake.Flow
             CaseStarted?.Invoke(customerCase);
         }
 
+        private IEnumerator FinishAfterPause()
+        {
+            yield return new WaitForSeconds(1f);
+            yield return FinishCaseRoutine();
+        }
+
         private IEnumerator FinishCaseRoutine()
         {
             yield return Talk(CurrentCase.Resolution);
@@ -244,10 +250,18 @@ namespace TheLastMooncake.Flow
             RefreshInput();
             flow.BeginResolution();
 
+            // With resolution dialogue the story carries on straight away (after a beat for the
+            // "correct" sound); the panel with its summary is only the fallback.
+            if (CurrentCase.Resolution.Count > 0 || resolutionPanel == null)
+            {
+                StartCoroutine(FinishAfterPause());
+                CaseSolved?.Invoke(CurrentCase);
+                return;
+            }
+
             if (resolutionText != null)
             {
-                // With resolution dialogue the story is told there; the summary is the fallback.
-                resolutionText.text = CurrentCase.Resolution.Count > 0 ? string.Empty : CurrentCase.ResolutionSummary;
+                resolutionText.text = CurrentCase.ResolutionSummary;
             }
 
             if (continueLabel != null)
@@ -255,14 +269,7 @@ namespace TheLastMooncake.Flow
                 continueLabel.text = "CONTINUE";
             }
 
-            if (resolutionPanel != null)
-            {
-                resolutionPanel.SetActive(true);
-            }
-            else
-            {
-                StartCoroutine(FinishCaseRoutine());
-            }
+            resolutionPanel.SetActive(true);
 
             CaseSolved?.Invoke(CurrentCase);
         }

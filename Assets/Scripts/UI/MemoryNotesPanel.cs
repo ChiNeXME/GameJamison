@@ -91,17 +91,31 @@ namespace TheLastMooncake.UI
             {
                 ManualNotes.SetActive(false);
                 AutoNotes.SetActive(true);
+                SetNoteRowsVisible(true);
             }
             else if (SS && !SS.IsAutoNotesOnBool)//Enable manual + Disable Auto etc
             {
                 ManualNotes.SetActive(true);
                 AutoNotes.SetActive(false);
+                SetNoteRowsVisible(false);
             }
 
             panel.SetActive(true);
             session?.AddInputBlock();
             hasUnread = false;
             Refresh();
+        }
+
+        // The auto note rows sit beside AutoNotes in the scene rather than inside it, so they are toggled separately.
+        private void SetNoteRowsVisible(bool visible)
+        {
+            foreach (TextMeshProUGUI row in noteRows)
+            {
+                if (row != null)
+                {
+                    row.gameObject.SetActive(visible);
+                }
+            }
         }
 
         public void Close()

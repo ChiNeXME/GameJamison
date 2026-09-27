@@ -22,30 +22,36 @@ MonoBehaviour:
     npcId: 0
     style: 3
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: It's close. The lotus, the sugar, the flowers. All of it is right.
     npcId: 2
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: But the middle is hollow. It tastes like something is missing.
     npcId: 2
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Perhaps the missing part was never yours to remember.
     npcId: 1
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: She left the centre empty because she couldn't remember it. Not because
       it was never there.
     npcId: 5
     style: 1
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Mei stays at the counter, turning the dented tin in her hands.
     npcId: 0
     style: 3
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}

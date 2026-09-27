@@ -22,86 +22,103 @@ MonoBehaviour:
     npcId: 0
     style: 3
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Slowly, Mei. Let the stone do the work.
     npcId: 6
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Jian finished his part already.
     npcId: 2
     style: 0
     speakerName: Young Mei
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Jian's part is different from yours. Different is not the same as easier.
     npcId: 6
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: One spoonful of sugar. We should taste the lotus first.
     npcId: 6
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Now, Jian. Your little moon.
     npcId: 6
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: What if I put it in crooked?
     npcId: 3
     style: 0
     speakerName: Young Jian
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Then Mei will help you straighten it.
     npcId: 6
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Only if he asks nicely.
     npcId: 2
     style: 0
     speakerName: Young Mei
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Please, honoured grinder warrior.
     npcId: 3
     style: 0
     speakerName: Young Jian
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Accepted.
     npcId: 2
     style: 0
     speakerName: Young Mei
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Good. A family recipe is too heavy for one pair of hands.
     npcId: 6
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Grandmother guides both children as they close the lotus paste around the
       yolk, dust the mold with osmanthus, and press together.
     npcId: 0
     style: 3
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: There. One cake, both of you.
     npcId: 6
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Grandmother sets the cake on the windowsill and looks at the twins for
       a long moment.
     npcId: 0
     style: 3
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: One day, you'll make this without me.
     npcId: 6
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: The memory fades before either child can answer.
     npcId: 0
     style: 3
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}

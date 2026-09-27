@@ -21,9 +21,11 @@ MonoBehaviour:
     npcId: 2
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Osmanthus. It used to stick to our sleeves.
     npcId: 3
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}

@@ -25,9 +25,12 @@ public static class DialogueImporter
     private const string DialogueFolder = "Assets/Data/Dialogue";
     private const string SpeakerFolder = "Assets/Scripts/Customers/CustomerStorage";
     private const string OldGrandmotherPrefab = "Assets/UI/Portraits/GrandmaImage.prefab";
+    private const string PortraitFolder = "Assets/UI/Portraits";
     private const string KitchenArt = "Assets/Art/Backgrounds/BG.png";
     private const string OpeningArt = "Assets/Art/Backgrounds/Mid-Autumn.png";
     private const string EndingMusic = "Assets/BGM/ending.mp3";
+    private const string CorrectSound = "Assets/SFX/Correct.mp3";
+    private const string WrongSound = "Assets/SFX/Wrong.mp3";
     private const string EndingArt = "Assets/Art/Cutscenes/EndingCutscene.png";
     private const string CasesFolder = "Assets/Data/Customers";
 
@@ -69,7 +72,8 @@ public static class DialogueImporter
         SetPanel(opening, NightPanel, string.Empty);
         opening.panelImage = LoadSprite(OpeningArt);
         Conversation ending = Build("99_Ending", script, id => id.StartsWith("S8-"));
-        SetPanel(ending, NightPanel, "A memory of the moon");
+        SetPanel(ending, NightPanel, string.Empty);
+        ending.panelImage = LoadSprite(OpeningArt);
         SetPanelImageFrom(ending, "S8-07", endingSprite, script);
 
         // Customer 1: Lina (guided tutorial).
@@ -238,6 +242,12 @@ public static class DialogueImporter
         {
             line.npcId = ChangE;
             line.style = speaker.Contains("memory") ? LineStyle.Remembered : LineStyle.Speech;
+            if (line.style == LineStyle.Remembered)
+            {
+                // Her face and name stay a secret until the ending.
+                line.hidePortrait = true;
+                line.speakerName = "???";
+            }
         }
         else if (speaker == "young mei")
         {
@@ -413,7 +423,54 @@ public static class DialogueImporter
             AssetDatabase.DeleteAsset(OldGrandmotherPrefab);
         }
 
+        // Artemis is a cat: one frame, no mouth animation. Only fills an empty slot.
+        Customer artemis = speakers[Artemis];
+        if (artemis.CharacterPortrait == null)
+        {
+            artemis.CharacterPortrait = EnsurePortraitPrefab("ArtemisImage", "ArtemisPortrait.png");
+            EditorUtility.SetDirty(artemis);
+        }
+
+        // Chang'e's portrait (hidden on her memory lines, see TryMapSpeaker). Only fills empty slots.
+        Customer changE = speakers[ChangE];
+        if (changE.CharacterPortrait == null)
+        {
+            changE.CharacterPortrait = EnsurePortraitPrefab("ChangEImage", "ChangEPortrait.png");
+            EditorUtility.SetDirty(changE);
+        }
+
+        if (changE.OpenMouthPortrait == null)
+        {
+            changE.OpenMouthPortrait = EnsurePortraitPrefab("ChangEOpen", "ChangEPortraitOpen.png");
+            EditorUtility.SetDirty(changE);
+        }
+
         return speakers;
+    }
+
+    /// <summary>A UI Image prefab showing one portrait sprite, like the team's BakerImage.</summary>
+    private static Image EnsurePortraitPrefab(string prefabName, string spriteFile)
+    {
+        string prefabPath = $"{PortraitFolder}/{prefabName}.prefab";
+        GameObject existing = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+        if (existing != null)
+        {
+            return existing.GetComponent<Image>();
+        }
+
+        Sprite sprite = LoadSprite($"{PortraitFolder}/{spriteFile}");
+        if (sprite == null)
+        {
+            Debug.LogWarning($"Portrait {spriteFile} is missing from {PortraitFolder}.");
+            return null;
+        }
+
+        var go = new GameObject(prefabName, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+        go.layer = LayerMask.NameToLayer("UI");
+        go.GetComponent<Image>().sprite = sprite;
+        GameObject prefab = PrefabUtility.SaveAsPrefabAsset(go, prefabPath);
+        UnityEngine.Object.DestroyImmediate(go);
+        return prefab.GetComponent<Image>();
     }
 
     private static void EnsureSpeaker(Dictionary<int, Customer> speakers, int id, string speakerName, Image portrait, AudioClip voice)
@@ -510,6 +567,15 @@ public static class DialogueImporter
         }
 
         serializedSession.ApplyModifiedPropertiesWithoutUndo();
+
+        RecipeFeedback feedback = FindInScene<RecipeFeedback>(scene);
+        if (feedback != null)
+        {
+            var serializedFeedback = new SerializedObject(feedback);
+            serializedFeedback.FindProperty("correctSound").objectReferenceValue = AssetDatabase.LoadAssetAtPath<AudioClip>(CorrectSound);
+            serializedFeedback.FindProperty("wrongSound").objectReferenceValue = AssetDatabase.LoadAssetAtPath<AudioClip>(WrongSound);
+            serializedFeedback.ApplyModifiedPropertiesWithoutUndo();
+        }
 
         // End credits sit above the story UI but below the pause menu.
         var flow = (GameFlowController)serializedSession.FindProperty("flow").objectReferenceValue;

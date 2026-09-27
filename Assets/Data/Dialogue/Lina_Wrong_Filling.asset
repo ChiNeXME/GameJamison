@@ -21,4 +21,5 @@ MonoBehaviour:
     npcId: 4
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}

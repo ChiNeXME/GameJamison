@@ -21,108 +21,129 @@ MonoBehaviour:
     npcId: 0
     style: 3
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Welcome. What can I make for you?
     npcId: 1
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: I'm hoping you can remake something. My grandmother's mooncake.
     npcId: 2
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: From a written recipe?
     npcId: 1
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: I wish. Grandmother died last winter. Jian was meant to keep the recipe,
       but now he says he cannot find it.
     npcId: 2
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Then tell me what you remember.
     npcId: 1
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Lotus. I used to grind the soaked seeds while Grandmother watched.
     npcId: 2
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Slowly, Mei. Smooth paste comes from patience, not force.
     npcId: 6
     style: 2
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: She added one small spoonful of sugar. Never more.
     npcId: 2
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Sweetness should carry the lotus, not bury it.
     npcId: 6
     style: 2
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Lotus paste. Only a little sugar.
     npcId: 5
     style: 1
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Anything at the centre?
     npcId: 1
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: No. At least... I don't remember one. Jian insists there was a yolk, but
       he remembers the things he ate, not the things he made.
     npcId: 2
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Not remembering is different from remembering there was none.
     npcId: 1
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: You sound like Grandmother.
     npcId: 2
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: I'll take that as a compliment.
     npcId: 1
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: There was a floral smell. It clung to her sleeves and the paper around
       every cake.
     npcId: 2
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Jasmine?
     npcId: 1
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Osmanthus. She tucked a sprig behind my ear while the cakes cooled.
     npcId: 2
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Osmanthus. The mold warmed when she said it.
     npcId: 5
     style: 1
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: This is our first festival without her. I thought if it tasted the same,
       the house might feel less empty.
     npcId: 2
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}

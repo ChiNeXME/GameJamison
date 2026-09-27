@@ -22,40 +22,48 @@ MonoBehaviour:
     npcId: 0
     style: 3
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: There you are. I wondered who kept sleeping beneath my window.
     npcId: 1
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: You chose a strange night to visit. Even the moon seems to have forgotten
       how to shine.
     npcId: 1
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: That mold... Why does it feel familiar?
     npcId: 5
     style: 1
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Artemis touches the mold. A thread of moonlight passes through its crack.
     npcId: 0
     style: 3
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: When people forget, help them remember.
     npcId: 7
     style: 2
-    speakerName: 
+    speakerName: ???
+    hidePortrait: 1
     panelImage: {fileID: 0}
   - text: Who said that?
     npcId: 5
     style: 1
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Hm? Did you hear something too, little one?
     npcId: 1
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}

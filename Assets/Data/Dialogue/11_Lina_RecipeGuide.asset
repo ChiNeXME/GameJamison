@@ -21,25 +21,30 @@ MonoBehaviour:
     npcId: 1
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Now the centre. Sometimes the important choice is what someone deliberately
       left out.
     npcId: 1
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Sweetness is a recipe setting, not an ingredient. What did her father change?
     npcId: 1
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: 'Last comes the finish: the mark that told Lina the cake was hers.'
     npcId: 1
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Good. Press the mold when the four memories agree.
     npcId: 1
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}

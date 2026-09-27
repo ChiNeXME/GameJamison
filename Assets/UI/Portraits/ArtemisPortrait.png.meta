@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1dbd944c7369ce940aea21de6b5a8a6b
+guid: 0d57be438eb5fec478b6bd499f1e8fbf
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2676640874238883429
-    second: Grandmother_Head_Talking_0
+      213: -8302653075554738349
+    second: ArtemisPortrait_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Grandmother_Head_Talking_0
+      name: ArtemisPortrait_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1402
-        height: 1122
+        x: 58
+        y: 18
+        width: 881
+        height: 929
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 566bc4491b6552520800000000000000
-      internalID: 2676640874238883429
+      spriteID: 35f5142640d07cc80800000000000000
+      internalID: -8302653075554738349
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Grandmother_Head_Talking_0: 2676640874238883429
+      ArtemisPortrait_0: -8302653075554738349
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

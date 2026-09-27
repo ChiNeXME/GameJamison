@@ -17,6 +17,8 @@ public sealed class DragDrop : MonoBehaviour
     [SerializeField] private bool snapToTarget = true;
 
     public event Action<GameObject, Collider2D> IngredientDropped;
+    /// <summary>Raised when an ingredient is let go away from every drop target.</summary>
+    public event Action<GameObject> IngredientDroppedOutside;
 
     private Camera mainCamera;
     private Collider2D draggedCollider;
@@ -76,6 +78,7 @@ public sealed class DragDrop : MonoBehaviour
         if (target == null)
         {
             ingredient.transform.position = originalPosition;
+            IngredientDroppedOutside?.Invoke(ingredient.gameObject);
             return;
         }
 

@@ -21,9 +21,11 @@ MonoBehaviour:
     npcId: 3
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: A memory that precise deserves a place in the recipe.
     npcId: 1
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}

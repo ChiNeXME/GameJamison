@@ -21,9 +21,11 @@ MonoBehaviour:
     npcId: 2
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}
   - text: Then we use a lighter hand.
     npcId: 1
     style: 0
     speakerName: 
+    hidePortrait: 0
     panelImage: {fileID: 0}

@@ -12,6 +12,10 @@ namespace TheLastMooncake.Recipe
         [SerializeField] private UnityEvent onWrongRecipe = new();
         [SerializeField] private UnityEvent<RecipeCategory> onHintRequested = new();
         [SerializeField] private UnityEvent<RecipeCategory> onExplicitCorrectionRequested = new();
+        [SerializeField] private AudioClip correctSound = null;
+        [SerializeField] private AudioClip wrongSound = null;
+        [Tooltip("Loudness of the correct/wrong sounds; above 1 boosts them past the clip's own level.")]
+        [SerializeField, Range(0f, 3f)] private float soundVolume = 2f;
 
         public int FailedAttempts { get; private set; }
         public UnityEvent OnCorrectRecipe => onCorrectRecipe;
@@ -49,12 +53,14 @@ namespace TheLastMooncake.Recipe
             if (result.IsCorrect)
             {
                 FailedAttempts = 0;
+                PlaySound(correctSound, soundVolume);
                 onCorrectRecipe?.Invoke();
                 RecipeCorrect?.Invoke();
                 return;
             }
 
             FailedAttempts++;
+            PlaySound(wrongSound, soundVolume);
             onWrongRecipe?.Invoke();
             RecipeWrong?.Invoke();
 
@@ -71,6 +77,16 @@ namespace TheLastMooncake.Recipe
             }
 
             selection?.ClearAll();
+        }
+
+        // Plays through the shared SFX player (SFX volume); it is missing when CafeTime is played directly.
+        private static void PlaySound(AudioClip clip, float volume)
+        {
+            AudioSource source = GlobalSFXPlayer.instance != null ? GlobalSFXPlayer.instance.GetComponent<AudioSource>() : null;
+            if (clip != null && source != null)
+            {
+                source.PlayOneShot(clip, volume);
+            }
         }
     }
 }

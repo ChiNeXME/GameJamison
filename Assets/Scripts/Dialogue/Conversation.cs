@@ -18,6 +18,8 @@ public class DialogueLine
     public LineStyle style = LineStyle.Speech;
     [Tooltip("Optional: shown instead of the NPC's name (e.g. \"Young Mei\").")]
     public string speakerName;
+    [Tooltip("Hide the speaker's portrait on this line (e.g. Chang'e's voice before she is revealed).")]
+    public bool hidePortrait;
     [Tooltip("Optional: switches the story panel to this picture from this line on.")]
     public Sprite panelImage;
 }

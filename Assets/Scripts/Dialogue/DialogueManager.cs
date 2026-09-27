@@ -146,7 +146,7 @@ public class DialogueManager : MonoBehaviour
             text.ForceMeshUpdate();
             int count = text.textInfo.characterCount;
 
-            bool hasPortrait = speaker != null && speaker.CharacterPortrait != null;
+            bool hasPortrait = speaker != null && speaker.CharacterPortrait != null && !line.hidePortrait;
             DialogueImage.enabled = hasPortrait;
             if (hasPortrait)
                 DialogueImage.sprite = speaker.CharacterPortrait.sprite;
