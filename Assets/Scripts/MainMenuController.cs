@@ -22,14 +22,22 @@ namespace TheLastMooncake.UI
 #endif
         }
 
+        // Settings live on the persistent SettingsCanvas; this scene's own copy is destroyed
+        // when the menu is loaded again, so go through the surviving instance.
         public void Settings()
         {
-            SettingsPanel.SetActive(true);
+            if (SettingsScript.instance != null)
+                SettingsScript.instance.Open();
+            else if (SettingsPanel != null)
+                SettingsPanel.SetActive(true);
         }
 
         public void CloseSettings()
         {
-            SettingsPanel.SetActive(false);
+            if (SettingsScript.instance != null)
+                SettingsScript.instance.Close();
+            else if (SettingsPanel != null)
+                SettingsPanel.SetActive(false);
         }
     }
 }

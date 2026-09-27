@@ -27,16 +27,50 @@ public class SettingsScript : MonoBehaviour
         //value is 0 - 1
         AM.SetFloat(param, Mathf.Log10(value) * 20); //if its 0, -80f, if its 1, -20f
     }
+    GameObject panel;
+    bool isDuplicate;
+
+    public bool IsOpen => panel != null && panel.activeSelf;
+
+    void Awake()
+    {
+        //persistent singleton; the main menu makes a spare copy every time it loads again
+        if (instance != null && instance != this)
+        {
+            isDuplicate = true;
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        // Close with our own button: the menu that first wired it is gone after a scene change.
+        Transform panelTransform = transform.Find("SettingsPanel");
+        panel = panelTransform != null ? panelTransform.gameObject : null;
+        Button close = panelTransform != null ? panelTransform.Find("CloseSettings")?.GetComponent<Button>() : null;
+        close?.onClick.AddListener(Close);
+
+        // Stay above the game's UI (pause menu) when opened mid-game.
+        Canvas canvas = GetComponent<Canvas>();
+        if (canvas != null)
+            canvas.sortingOrder = 100;
+    }
+
+    public void Open()
+    {
+        panel?.SetActive(true);
+    }
+
+    public void Close()
+    {
+        panel?.SetActive(false);
+    }
+
     void Start()
     {
-        //persistent singleton 
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-            Destroy(gameObject);
+        if (isDuplicate)
+            return;
 
 
         //get from prefs

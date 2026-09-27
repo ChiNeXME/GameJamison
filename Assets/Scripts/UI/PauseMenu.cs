@@ -1,5 +1,7 @@
 using TheLastMooncake.Flow;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
@@ -14,6 +16,42 @@ namespace TheLastMooncake.UI
 
         public bool IsPaused { get; private set; }
 
+        private void Start()
+        {
+            AddSettingsButton();
+        }
+
+        // The settings screen lives in the main menu scene, so the button is made here rather
+        // than in CafeTime, and only when that screen exists (not when CafeTime is played directly).
+        private void AddSettingsButton()
+        {
+            Transform titleButton = panel != null ? panel.transform.Find("TitleButton") : null;
+            if (SettingsScript.instance == null || titleButton == null)
+            {
+                return;
+            }
+
+            GameObject copy = Instantiate(titleButton.gameObject, titleButton.parent);
+            copy.name = "SettingsButton";
+            var rect = (RectTransform)copy.transform;
+            rect.anchoredPosition += new Vector2(0f, -100f);
+
+            Button button = copy.GetComponent<Button>();
+            button.onClick = new Button.ButtonClickedEvent();
+            button.onClick.AddListener(OpenSettings);
+
+            TextMeshProUGUI label = copy.GetComponentInChildren<TextMeshProUGUI>();
+            if (label != null)
+            {
+                label.text = "SETTINGS";
+            }
+        }
+
+        public void OpenSettings()
+        {
+            SettingsScript.instance?.Open();
+        }
+
         private void Update()
         {
             Keyboard keyboard = Keyboard.current;
@@ -22,7 +60,11 @@ namespace TheLastMooncake.UI
                 return;
             }
 
-            if (IsPaused)
+            if (SettingsScript.instance != null && SettingsScript.instance.IsOpen)
+            {
+                SettingsScript.instance.Close();
+            }
+            else if (IsPaused)
             {
                 Resume();
             }
@@ -70,6 +112,7 @@ namespace TheLastMooncake.UI
 
         public void ReturnToTitle()
         {
+            SettingsScript.instance?.Close();
             Time.timeScale = 1f;
             SceneManager.LoadScene(titleSceneName);
         }

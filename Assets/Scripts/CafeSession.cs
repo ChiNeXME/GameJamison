@@ -45,6 +45,7 @@ namespace TheLastMooncake.Flow
         public int CaseCount => cases.Length;
         public int SolvedCount { get; private set; }
 
+        public event Action<CustomerCase> CustomerArriving;
         public event Action<CustomerCase> CaseStarted;
         public event Action<CustomerCase> CaseSolved;
 
@@ -120,6 +121,7 @@ namespace TheLastMooncake.Flow
             }
 
             flow.BeginCustomerStory();
+            CustomerArriving?.Invoke(customerCase);
             var story = new List<Conversation> { before };
             story.AddRange(customerCase.Arrival);
             story.Add(customerCase.RecipeGuide);
