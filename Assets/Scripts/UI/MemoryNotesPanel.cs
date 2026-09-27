@@ -5,6 +5,7 @@ using TheLastMooncake.Customers;
 using TheLastMooncake.Flow;
 using TheLastMooncake.Recipe;
 using UnityEngine;
+using UnityEditor.SettingsManagement;
 
 namespace TheLastMooncake.UI
 {
@@ -22,12 +23,19 @@ namespace TheLastMooncake.UI
         [SerializeField] private TextMeshProUGUI buttonLabel = null;
         [SerializeField] private Color noteColor = new(0.25f, 0.15f, 0.08f);
         [SerializeField] private Color highlightColor = new(0.72f, 0.26f, 0.04f);
+        SettingsScript SS;
+        [SerializeField] GameObject ManualNotes;
+        [SerializeField] GameObject AutoNotes;
 
         private readonly Dictionary<RecipeCategory, string> corrections = new();
         private RecipeCategory? highlighted;
         private bool hasUnread;
 
         public bool IsOpen => panel != null && panel.activeSelf;
+        void Start()
+        {
+            SS = GameObject.Find("SettingsCanvas").GetComponent<SettingsScript>();
+        }
 
         private void OnEnable()
         {
@@ -76,6 +84,17 @@ namespace TheLastMooncake.UI
             if (IsOpen || panel == null)
             {
                 return;
+            }
+
+            if (SS && SS.IsAutoNotesOnBool) //Disable manual + Enable Auto etc
+            {
+                ManualNotes.SetActive(false);
+                AutoNotes.SetActive(true);
+            }
+            else if (SS && !SS.IsAutoNotesOnBool)//Enable manual + Disable Auto etc
+            {
+                ManualNotes.SetActive(true);
+                AutoNotes.SetActive(false);
             }
 
             panel.SetActive(true);

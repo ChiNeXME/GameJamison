@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 08b9fee2104a4644393a0ca4ffc6aa5e, type: 3}
-  m_Name: 2
+  m_Name: 4
   m_EditorClassIdentifier: Assembly-CSharp::Customer
-  CharacterPortrait: {fileID: 8481559752484358386, guid: b125ad6bd8abd5c40b7496df8d95219b, type: 3}
-  npcId: 2
-  Name: Mei
-  TextSFX: {fileID: 8300000, guid: 3f5338e71a9d1a64b8a4b51ba5ca3507, type: 3}
+  CharacterPortrait: {fileID: 8481559752484358386, guid: 58cb263783224dd4b8c976e12ad7b4ca, type: 3}
+  npcId: 4
+  Name: Lina
+  TextSFX: {fileID: 8300000, guid: a46f67b24d511e44f9074e5e1eea7943, type: 3}

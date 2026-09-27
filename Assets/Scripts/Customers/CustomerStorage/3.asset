@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08b9fee2104a4644393a0ca4ffc6aa5e, type: 3}
   m_Name: 3
   m_EditorClassIdentifier: Assembly-CSharp::Customer
-  CharacterPortrait: {fileID: 0}
+  CharacterPortrait: {fileID: 8481559752484358386, guid: 7bfba8722aad88e44ba25c53981795f9, type: 3}
   npcId: 3
   Name: Jian
   TextSFX: {fileID: 8300000, guid: 09fb9af3cd4b1e849908c56757c6fec2, type: 3}

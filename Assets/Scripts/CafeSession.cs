@@ -139,6 +139,7 @@ namespace TheLastMooncake.Flow
             Conversation Convo = dialogueHolder.conversations[ConvoIndex];
             yield return DM.ConversationStart(Convo);
             DM.Drop();
+            yield return new WaitForSeconds(0.5f);
             StartCase(Index);
         }
 

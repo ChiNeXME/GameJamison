@@ -15,6 +15,8 @@ public class SettingsScript : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI AutoNotesText;
 
+    public static SettingsScript instance;
+
     float MasterVol;
     float BGMVol;
     float SFXVol;
@@ -27,6 +29,16 @@ public class SettingsScript : MonoBehaviour
     }
     void Start()
     {
+        //persistent singleton 
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+            Destroy(gameObject);
+
+
         //get from prefs
         MasterVol = PlayerPrefs.GetFloat("MasterVolume", 0.5f);
         BGMVol = PlayerPrefs.GetFloat("BGMVolume", 1f);
@@ -71,8 +83,8 @@ public class SettingsScript : MonoBehaviour
             SetMixer("BGM", val);
             PlayerPrefs.SetFloat("BGMVolume", val);
         });
-
-        gameObject.SetActive(false); //done loading it all, now it makes it invis
+        gameObject.SetActive(false);
+        gameObject.SetActive(true); //done loading it all, make it active in case
     }
 
     void OnDisable()
