@@ -77,7 +77,7 @@ namespace TheLastMooncake.Recipe
 
             IEnumerable<string> parts = RecipeRules.AllCategories.Select(category =>
             {
-                RecipeChoice choice = RecipeChoice.None;
+                RecipeChoice choice = selection != null ? selection.GetEffectiveChoice(category) : RecipeChoice.None;
                 selection?.TryGetChoice(category, out choice);
                 return $"{category}: {RecipeRules.GetDisplayName(choice)}";
             });

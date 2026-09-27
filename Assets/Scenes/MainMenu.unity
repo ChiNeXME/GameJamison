@@ -1945,7 +1945,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Off
+  m_text: 'No
 
 '
   m_isRightToLeft: 0
@@ -3012,11 +3012,11 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -882335010599699649, guid: b811680577bfc0b4986d6b40021d4728, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: c02ae5121916dc945b600441330ebf20, type: 3}
+  m_Resource: {fileID: 8300000, guid: ab2361fcea6ce084bb8052b15878564b, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

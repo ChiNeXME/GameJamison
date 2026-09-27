@@ -47,7 +47,7 @@ public class SettingsScript : MonoBehaviour
 
         if (IsAutoNotesOn == 1)
         {
-            AutoNotesText.text = "Yes";
+            AutoNotesText.text = "On";
             IsAutoNotesOnBool = true;
         }
         else

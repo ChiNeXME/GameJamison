@@ -34,6 +34,7 @@ namespace TheLastMooncake.Recipe
 
         public void Select()
         {
+
             if (selection == null)
             {
                 Debug.LogError("RecipeChoiceButton needs a RecipeSelection reference.", this);

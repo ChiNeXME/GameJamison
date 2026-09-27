@@ -47,7 +47,15 @@ namespace TheLastMooncake.Recipe
         {
             return category == RecipeCategory.Centre ? RecipeChoice.NoYolk : RecipeChoice.None;
         }
-
+        public RecipeChoice GetEffectiveChoice(RecipeCategory category)
+        {
+            if (TryGetChoice(category, out RecipeChoice choice) && choice != RecipeChoice.None)
+            {
+                return choice;
+            }
+        
+            return category == RecipeCategory.Centre ? RecipeChoice.NoYolk : RecipeChoice.None;
+        }
         public bool SelectChoice(RecipeCategory category, RecipeChoice choice)
         {
             if (!RecipeRules.IsChoiceForCategory(category, choice))

@@ -61,9 +61,7 @@ namespace TheLastMooncake.Recipe
             List<RecipeCategory> missing = new();
             foreach (RecipeCategory category in RecipeRules.AllCategories)
             {
-                if (selection == null ||
-                    !selection.TryGetChoice(category, out RecipeChoice choice) ||
-                    choice == RecipeChoice.None)
+                if (selection == null || selection.GetEffectiveChoice(category) == RecipeChoice.None)
                 {
                     missing.Add(category);
                 }
@@ -77,9 +75,7 @@ namespace TheLastMooncake.Recipe
             RecipeChoice expected,
             ICollection<RecipeCategory> incorrect)
         {
-            if (selection == null ||
-                !selection.TryGetChoice(category, out RecipeChoice actual) ||
-                actual != expected)
+            if (selection == null || selection.GetEffectiveChoice(category) != expected)
             {
                 incorrect.Add(category);
             }
