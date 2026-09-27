@@ -36,7 +36,7 @@ This is the chronological assembly script. Character-only recording sheets use t
 
 **[L1-07 | Lina]** My father left this at my flower shop this morning. He didn't come inside.
 
-**[L1-08 | Lina]** We haven't spoken properly since I left. I want to bring him one of the mooncakes he used to make for me—but I never learned the recipe.
+**[L1-08 | Lina]** We haven't spoken properly since I left. I want to bring him one of the mooncakes he used to make for me. But I never learned the recipe.
 
 **[L1-09 | Baker]** Tell us what you do remember.
 
@@ -88,7 +88,7 @@ This first recipe is the guided tutorial. Unlock one category at a time and let 
 
 **[L3-03A | Tutorial]** Highlight the sweetness control. The player selects **Less sugar**.
 
-**[L3-03B | Baker]** Last comes the finish—the mark that told Lina the cake was hers.
+**[L3-03B | Baker]** Last comes the finish: the mark that told Lina the cake was hers.
 
 **[L3-04 | Artemis — notebook]** A tiny osmanthus flower marked the cake as hers.
 
@@ -184,6 +184,58 @@ This first recipe is the guided tutorial. Unlock one category at a time and let 
 
 **[S2-21 | Mei]** This is our first festival without her. I thought if it tasted the same, the house might feel less empty.
 
+## S2B — Mei's recipe (her half)
+
+Customer 2. Mei's cake is made only from what she remembers: lotus, empty centre, less sugar, osmanthus. *(New lines, draft: please review.)*
+
+**[S2B-01 | Baker]** Then we'll make it the way you remember it. Only the details you're sure of.
+
+**[S2B-N1 | Artemis — notebook]** Mei ground lotus seeds beside Grandmother.
+
+**[S2B-N2 | Artemis — notebook]** Mei doesn't remember anything in the centre.
+
+**[S2B-N3 | Artemis — notebook]** One small spoonful. The sugar must not bury the lotus.
+
+**[S2B-N4 | Artemis — notebook]** Osmanthus clung to Grandmother's sleeves and the paper around every cake.
+
+### Mei wrong filling
+
+**[S2B-F1 | Mei]** No. Lotus. I ground those seeds myself.
+
+**[S2B-F2 | Artemis — direct hint, second miss]** The filling was lotus paste.
+
+### Mei wrong centre
+
+**[S2B-C1 | Mei]** I don't remember anything in the middle. Make it the way I remember it.
+
+**[S2B-C2 | Artemis — direct hint, second miss]** Leave the centre empty, as Mei remembers it.
+
+### Mei wrong sweetness
+
+**[S2B-S1 | Mei]** Too sweet. One small spoonful. Never more.
+
+**[S2B-S2 | Artemis — direct hint, second miss]** Choose less sugar.
+
+### Mei wrong finish
+
+**[S2B-O1 | Mei]** The scent is wrong. It should smell like her sleeves.
+
+**[S2B-O2 | Artemis — direct hint, second miss]** Finish the cake with osmanthus.
+
+## S2C — Mei's cake
+
+**[S2C-01 | Stage]** The mold glows faintly, then dims. Mei breaks the finished cake in half and tastes it.
+
+**[S2C-02 | Mei]** It's close. The lotus, the sugar, the flowers. All of it is right.
+
+**[S2C-03 | Mei]** But the middle is hollow. It tastes like something is missing.
+
+**[S2C-04 | Baker]** Perhaps the missing part was never yours to remember.
+
+**[S2C-05 | Artemis — thought]** She left the centre empty because she couldn't remember it. Not because it was never there.
+
+**[S2C-06 | Stage]** Mei stays at the counter, turning the dented tin in her hands.
+
 ## S3 — Jian arrives separately
 
 **[S3-01 | Stage]** The bell rings again. Jian enters, slightly out of breath. He stops when he sees Mei and the tin.
@@ -252,7 +304,7 @@ This first recipe is the guided tutorial. Unlock one category at a time and let 
 
 **[S4-02 | Artemis — notebook]** Mei ground lotus seeds beside Grandmother.
 
-**[S4-03 | Artemis — notebook]** One small spoonful—the sugar must not bury the lotus.
+**[S4-03 | Artemis — notebook]** One small spoonful. The sugar must not bury the lotus.
 
 **[S4-04 | Artemis — notebook]** Jian placed one little moon in the centre.
 
@@ -306,7 +358,7 @@ Play one applicable branch, then return to the recipe board.
 
 **[S6-05 | Grandmother]** One spoonful of sugar. We should taste the lotus first.
 
-**[S6-06 | Grandmother]** Now, Jian—your little moon.
+**[S6-06 | Grandmother]** Now, Jian. Your little moon.
 
 **[S6-07 | Young Jian]** What if I put it in crooked?
 
@@ -340,7 +392,7 @@ Play one applicable branch, then return to the recipe board.
 
 **[S7-04 | Mei]** I couldn't remember your part, so I treated it as if it never happened.
 
-**[S7-05 | Jian]** I did lose the page. I'm sorry. I thought losing it meant I had failed her—and you.
+**[S7-05 | Jian]** I did lose the page. I'm sorry. I thought losing it meant I had failed her. And you.
 
 **[S7-06 | Mei]** I blamed you because being angry was easier than saying she's gone.
 

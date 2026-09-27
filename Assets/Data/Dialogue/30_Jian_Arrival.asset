@@ -1,0 +1,175 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 002b9076b5a919941a76b7b86978d20e, type: 3}
+  m_Name: 30_Jian_Arrival
+  m_EditorClassIdentifier: Assembly-CSharp::Conversation
+  showPanel: 0
+  panelImage: {fileID: 0}
+  panelColor: {r: 0.06, g: 0.07, b: 0.13, a: 1}
+  panelTitle: 
+  Lines:
+  - text: The bell rings again. Jian enters, slightly out of breath. He stops when
+      he sees Mei and the tin.
+    npcId: 0
+    style: 3
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: There it is. I've been looking everywhere for that tin.
+    npcId: 3
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: It was in the cupboard where you left it three years ago.
+    npcId: 2
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: I hoped it would be here.
+    npcId: 3
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: By forgetting it existed?
+    npcId: 2
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: You must be Jian.
+    npcId: 1
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: And she told you I lost the recipe.
+    npcId: 3
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: You said red bean last week.
+    npcId: 2
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: I said it might have been red bean because I was guessing. I lost the page
+      while we were clearing Grandmother's house.
+    npcId: 3
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: You told me it was somewhere safe.
+    npcId: 2
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: I was ashamed. By the time I admitted it to myself, I didn't know how to
+      admit it to you.
+    npcId: 3
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: Which was?
+    npcId: 1
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: One salted yolk in the centre. Grandmother let me place it there.
+    npcId: 3
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: Gently, Jian. Set the little moon exactly in the middle.
+    npcId: 6
+    style: 2
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: I was terrified I'd break it. She guided my hands until it sat perfectly
+      straight.
+    npcId: 3
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: One yolk. A little moon in the middle.
+    npcId: 5
+    style: 1
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: I don't remember that.
+    npcId: 2
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: Because you were on the other side of the table, fighting the grinder.
+    npcId: 3
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: I was not fighting it.
+    npcId: 2
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: You told a kitchen tool it had insulted your honour.
+    npcId: 3
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: I was eight.
+    npcId: 2
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: So was I. Twins, remember?
+    npcId: 3
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: Mei almost smiles. The tension softens.
+    npcId: 0
+    style: 3
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: Mei remembers the lotus and the small spoonful of sugar. Jian remembers
+      the yolk. Both of you remember helping at the same table.
+    npcId: 1
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: And the flowers. Osmanthus. She scattered them over the mold because Mei
+      liked the smell.
+    npcId: 3
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: You remember that too?
+    npcId: 2
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: I remember you sneezing into the flour.
+    npcId: 3
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: Once.
+    npcId: 2
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: Perhaps the recipe was never kept by one person.
+    npcId: 1
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: Each carried a different half. Perhaps what remains is enough.
+    npcId: 5
+    style: 1
+    speakerName: 
+    panelImage: {fileID: 0}

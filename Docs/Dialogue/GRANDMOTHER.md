@@ -8,7 +8,7 @@ Grandmother appears only in remembered audio and the revealed memory. Her rememb
 - **S6-02:** Slowly, Mei. Let the stone do the work.
 - **S6-04:** Jian's part is different from yours. Different is not the same as easier.
 - **S6-05:** One spoonful of sugar. We should taste the lotus first.
-- **S6-06:** Now, Jian—your little moon.
+- **S6-06:** Now, Jian. Your little moon.
 - **S6-08:** Then Mei will help you straighten it.
 - **S6-12:** Good. A family recipe is too heavy for one pair of hands.
 - **S6-14:** There. One cake, both of you.

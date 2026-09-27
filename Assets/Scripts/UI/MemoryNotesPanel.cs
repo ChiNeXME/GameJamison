@@ -33,7 +33,9 @@ namespace TheLastMooncake.UI
         public bool IsOpen => panel != null && panel.activeSelf;
         void Start()
         {
-            SS = GameObject.Find("SettingsCanvas").GetComponent<SettingsScript>();
+            // SettingsCanvas comes from the main menu; it is missing when CafeTime is played directly.
+            GameObject settings = GameObject.Find("SettingsCanvas");
+            SS = settings != null ? settings.GetComponent<SettingsScript>() : null;
         }
 
         private void OnEnable()

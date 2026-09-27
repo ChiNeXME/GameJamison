@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 002b9076b5a919941a76b7b86978d20e, type: 3}
+  m_Name: 33_Twins_Resolution
+  m_EditorClassIdentifier: Assembly-CSharp::Conversation
+  showPanel: 0
+  panelImage: {fileID: 0}
+  panelColor: {r: 0.06, g: 0.07, b: 0.13, a: 1}
+  panelTitle: 
+  Lines:
+  - text: The bakery returns. Mei and Jian look at the finished mooncake.
+    npcId: 0
+    style: 3
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: I thought you were changing her recipe to hide that you lost it.
+    npcId: 2
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: I thought you had decided my part didn't matter.
+    npcId: 3
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: I couldn't remember your part, so I treated it as if it never happened.
+    npcId: 2
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: I did lose the page. I'm sorry. I thought losing it meant I had failed
+      her. And you.
+    npcId: 3
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: I blamed you because being angry was easier than saying she's gone.
+    npcId: 2
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: They split the mooncake and taste it. For a moment, neither speaks.
+    npcId: 0
+    style: 3
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: It tastes like her kitchen.
+    npcId: 3
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: Almost.
+    npcId: 2
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: Almost is more than I thought we had left.
+    npcId: 3
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: The Baker places a blank recipe card between them. Mei writes the filling
+      and sweetness. Jian adds the centre and finish.
+    npcId: 0
+    style: 3
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: It may not be every word she wrote. It is what the two of you can carry
+      forward.
+    npcId: 1
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: I'll keep the tin.
+    npcId: 2
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: I'll keep the recipe. Properly this time.
+    npcId: 3
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: We'll both keep copies.
+    npcId: 2
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: They leave together. Mei carries the old tin; Jian carries the new recipe.
+    npcId: 0
+    style: 3
+    speakerName: 
+    panelImage: {fileID: 0}

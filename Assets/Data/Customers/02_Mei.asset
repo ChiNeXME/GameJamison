@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86f6b1eac22e9e74594b8c753c27087c, type: 3}
+  m_Name: 02_Mei
+  m_EditorClassIdentifier: Assembly-CSharp::TheLastMooncake.Customers.CustomerCase
+  customerName: Mei
+  clues:
+  - category: 0
+    answer: 1
+    memoryNote: Mei ground lotus seeds beside Grandmother.
+    hint: 'Hint: Think about which seeds Mei ground.'
+    correction: The filling was lotus paste.
+    wrongReaction: {fileID: 11400000, guid: 33ba694b2195f85448a3cd40d1214409, type: 2}
+    directHint: {fileID: 11400000, guid: fdfe9d0acf864c5478d7ff0f81d6c4fb, type: 2}
+  - category: 1
+    answer: 4
+    memoryNote: Mei doesn't remember anything in the centre.
+    hint: 'Hint: Make only what Mei actually remembers.'
+    correction: Leave the centre empty, as Mei remembers it.
+    wrongReaction: {fileID: 11400000, guid: eee196e5aae877940967a0fbbcf87be3, type: 2}
+    directHint: {fileID: 11400000, guid: cc379a9a09079334398a9f6096fd20d8, type: 2}
+  - category: 2
+    answer: 5
+    memoryNote: One small spoonful. The sugar must not bury the lotus.
+    hint: 'Hint: One small spoonful. Never more.'
+    correction: Choose less sugar.
+    wrongReaction: {fileID: 11400000, guid: 8d8cb6e030d00df4d8a419d445b2ca8b, type: 2}
+    directHint: {fileID: 11400000, guid: e3f0c9deb601272479c56666bb497ef7, type: 2}
+  - category: 3
+    answer: 7
+    memoryNote: Osmanthus clung to Grandmother's sleeves and the paper around every
+      cake.
+    hint: 'Hint: Recall the scent on Grandmother''s sleeves.'
+    correction: Finish the cake with osmanthus.
+    wrongReaction: {fileID: 11400000, guid: 484636fbd6b07da40b7cd083d3e3b70a, type: 2}
+    directHint: {fileID: 11400000, guid: 82cbf9ee5bfe019499a5d42c64c715bf, type: 2}
+  resolutionSummary: The cake tastes close to Grandmother's, but its centre is hollow.
+    Something is still missing.
+  arrival:
+  - {fileID: 11400000, guid: 7809d40c9b14602468a8b3ba4739d92d, type: 2}
+  recipeGuide: {fileID: 11400000, guid: bd8c47aba514d8749a36c21d7f7fe7e4, type: 2}
+  resolution:
+  - {fileID: 11400000, guid: 0a8759b89ec316c4d82f9f6e92005a0a, type: 2}

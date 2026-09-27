@@ -11,6 +11,7 @@ public class DialogueManager : MonoBehaviour
 {
     [SerializeField] CustomerManager CM;
     [SerializeField] Image DialogueImage;
+    [SerializeField] StoryPanel storyPanel;
     public TextMeshProUGUI TextDisplay;
     public GameObject TextBox;
     public AudioClip TalkSfx;
@@ -26,7 +27,9 @@ public class DialogueManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        AS = GameObject.Find("SFXPlayer").GetComponent<AudioSource>();
+        // The SFX player lives in the main menu scene; it is missing when CafeTime is played directly.
+        GameObject sfxPlayer = GameObject.Find("SFXPlayer");
+        AS = sfxPlayer != null ? sfxPlayer.GetComponent<AudioSource>() : null;
         rectTransform = TextBox.GetComponent<RectTransform>();
     }
 
@@ -39,7 +42,7 @@ public class DialogueManager : MonoBehaviour
             rectTransform.anchoredPosition = Vector3.Lerp(OgPos, TargetPos, t);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (AdvancePressed())
         {
             SkipDialogue = true;
         }
@@ -53,6 +56,8 @@ public class DialogueManager : MonoBehaviour
     public void Rise() //test for dialogue
     {
         t = 0;
+        TextDisplay.text = "";
+        DialogueImage.enabled = false;
         TextBox.SetActive(true);
         StartCoroutine(RiseDialogueBox());
     }
@@ -92,54 +97,85 @@ public class DialogueManager : MonoBehaviour
     {
         while (isTalking)
         {
-            Debug.Log("MOVING");
             DialogueImage.sprite = i2.sprite;
             yield return new WaitForSeconds(0.1f);
             DialogueImage.sprite = i1.sprite;
             yield return new WaitForSeconds(0.1f);
         }
     }
+
+    // Space or left click advances; ignored while the game is paused.
+    bool AdvancePressed()
+    {
+        return Time.timeScale > 0f && (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0));
+    }
+
+    string FormatLine(DialogueLine line, Customer speaker)
+    {
+        string name = !string.IsNullOrEmpty(line.speakerName) ? line.speakerName
+            : speaker != null ? speaker.Name : "";
+        switch (line.style)
+        {
+            case LineStyle.Stage:
+                return "<i>" + line.text + "</i>";
+            case LineStyle.Thought:
+                return "<b>" + name + "</b> <size=75%>(thinking)</size>: <i>" + line.text + "</i>";
+            case LineStyle.Remembered:
+                return "<b>" + name + "</b> <size=75%>(memory)</size>: <i>" + line.text + "</i>";
+            default:
+                return "<b>" + name + "</b>: " + line.text;
+        }
+    }
+
     IEnumerator TalkConversation(Conversation Convo, TextMeshProUGUI text)
     {
+        if (Convo.showPanel && storyPanel != null)
+            yield return storyPanel.Show(Convo.panelColor, Convo.panelImage, Convo.panelTitle);
+
         for (int z = 0; z < Convo.Lines.Count; z++)
         {
-            SkipDialogue = false;
-            TalkSfx = CM.FindNPC(Convo.Lines[z].npcId).TextSFX;
-            string dialogue = CM.FindNPC(Convo.Lines[z].npcId).Name + ": ";
-            dialogue += Convo.Lines[z].text;
-            string talking = "";
+            DialogueLine line = Convo.Lines[z];
+            Customer speaker = line.style == LineStyle.Stage ? null : CM.FindNPC(line.npcId);
+            if (line.panelImage != null && storyPanel != null)
+                storyPanel.ChangePicture(line.panelImage);
 
+            SkipDialogue = false;
+            TalkSfx = speaker != null && line.style == LineStyle.Speech ? speaker.TextSFX : null;
+            text.text = FormatLine(line, speaker);
+            text.maxVisibleCharacters = 0;
+            text.ForceMeshUpdate();
+            int count = text.textInfo.characterCount;
+
+            bool hasPortrait = speaker != null && speaker.CharacterPortrait != null;
+            DialogueImage.enabled = hasPortrait;
+            if (hasPortrait)
+                DialogueImage.sprite = speaker.CharacterPortrait.sprite;
 
             isTalking = true;
-            StartCoroutine(MouthMoving(CM.FindNPC(Convo.Lines[z].npcId).CharacterPortrait,CM.FindNPC(Convo.Lines[z].npcId).OpenMouthPortrait));
-            for (int i = 0; i < dialogue.Length; i++)
+            if (hasPortrait && speaker.OpenMouthPortrait != null && line.style != LineStyle.Thought)
+                StartCoroutine(MouthMoving(speaker.CharacterPortrait, speaker.OpenMouthPortrait));
+            for (int i = 0; i < count; i++)
             {
-
-                //DialogueImage.sprite = CM.FindNPC(Convo.Lines[z].npcId).CharacterPortrait.sprite;
-               
                 if (SkipDialogue)
-                {
-                    text.text = dialogue;
-                    SkipDialogue = true;
                     break;
-                }
-                talking += dialogue[i];
-                text.text = talking;
-                if (dialogue[i] != ' ')
+                char c = text.textInfo.characterInfo[i].character;
+                text.maxVisibleCharacters = i + 1;
+                if (c != ' ' && TalkSfx != null && AS != null)
                     AS.PlayOneShot(TalkSfx);
 
-                if (dialogue[i] == ',' || dialogue[i] == '.') 
+                if (c == ',' || c == '.')
                     yield return new WaitForSeconds(0.2f);
                 else
                     yield return new WaitForSeconds(0.035f);
-                
             }
+            text.maxVisibleCharacters = 99999;
             isTalking = false;
-            if (SkipDialogue)
-                yield return null;
             yield return new WaitForSeconds(0.2f);
-            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
+            yield return new WaitUntil(AdvancePressed);
             yield return null;
         }
+
+        if (Convo.showPanel && storyPanel != null)
+            yield return storyPanel.Hide();
     }
 }

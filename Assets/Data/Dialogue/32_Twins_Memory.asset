@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 002b9076b5a919941a76b7b86978d20e, type: 3}
+  m_Name: 32_Twins_Memory
+  m_EditorClassIdentifier: Assembly-CSharp::Conversation
+  showPanel: 1
+  panelImage: {fileID: 21300000, guid: 7b8a93160683ecc4d8763ea3d5024315, type: 3}
+  panelColor: {r: 0.4, g: 0.26, b: 0.12, a: 1}
+  panelTitle: Grandmother's kitchen, years ago
+  Lines:
+  - text: The mold fills with pale gold light. The bakery dissolves into Grandmother's
+      kitchen years earlier.
+    npcId: 0
+    style: 3
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: Slowly, Mei. Let the stone do the work.
+    npcId: 6
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: Jian finished his part already.
+    npcId: 2
+    style: 0
+    speakerName: Young Mei
+    panelImage: {fileID: 0}
+  - text: Jian's part is different from yours. Different is not the same as easier.
+    npcId: 6
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: One spoonful of sugar. We should taste the lotus first.
+    npcId: 6
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: Now, Jian. Your little moon.
+    npcId: 6
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: What if I put it in crooked?
+    npcId: 3
+    style: 0
+    speakerName: Young Jian
+    panelImage: {fileID: 0}
+  - text: Then Mei will help you straighten it.
+    npcId: 6
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: Only if he asks nicely.
+    npcId: 2
+    style: 0
+    speakerName: Young Mei
+    panelImage: {fileID: 0}
+  - text: Please, honoured grinder warrior.
+    npcId: 3
+    style: 0
+    speakerName: Young Jian
+    panelImage: {fileID: 0}
+  - text: Accepted.
+    npcId: 2
+    style: 0
+    speakerName: Young Mei
+    panelImage: {fileID: 0}
+  - text: Good. A family recipe is too heavy for one pair of hands.
+    npcId: 6
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: Grandmother guides both children as they close the lotus paste around the
+      yolk, dust the mold with osmanthus, and press together.
+    npcId: 0
+    style: 3
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: There. One cake, both of you.
+    npcId: 6
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: Grandmother sets the cake on the windowsill and looks at the twins for
+      a long moment.
+    npcId: 0
+    style: 3
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: One day, you'll make this without me.
+    npcId: 6
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: The memory fades before either child can answer.
+    npcId: 0
+    style: 3
+    speakerName: 
+    panelImage: {fileID: 0}

@@ -19,20 +19,34 @@ MonoBehaviour:
     memoryNote: Lina stole warm red bean paste from her father's spoon.
     hint: 'Tutorial: Choose the filling Lina named directly.'
     correction: Use red bean paste.
+    wrongReaction: {fileID: 11400000, guid: fcba1fa68b6994647bbda6ab04b08c3e, type: 2}
+    directHint: {fileID: 11400000, guid: 06f33f2116badb749a4101d1d946778d, type: 2}
   - category: 1
     answer: 4
     memoryNote: Her father left out the yolk she disliked.
     hint: 'Tutorial: Choose what her father deliberately left out.'
-    correction: Leave the centre empty.
+    correction: Leave out the salted yolk.
+    wrongReaction: {fileID: 11400000, guid: 826a9e31acbbe39438f30efeedb4c221, type: 2}
+    directHint: {fileID: 11400000, guid: 1d5fdac243a0d2d4bb01f69f60e5aa3b, type: 2}
   - category: 2
     answer: 5
     memoryNote: He reduced the sugar because he listened.
     hint: 'Tutorial: Match the sweetness to her memory.'
     correction: Choose less sugar.
+    wrongReaction: {fileID: 11400000, guid: cbdc0efe8fc2de241a00eb02ff51cfff, type: 2}
+    directHint: {fileID: 11400000, guid: ea65bcebb860e3f4b844b0a0d91ac92b, type: 2}
   - category: 3
     answer: 7
     memoryNote: A tiny osmanthus flower marked the cake as hers.
     hint: 'Tutorial: Finish the cake with her flower mark.'
     correction: Finish with osmanthus.
+    wrongReaction: {fileID: 11400000, guid: 0e09acf8fdaf3ad499e76c436452c34e, type: 2}
+    directHint: {fileID: 11400000, guid: ba250ee25648878448afce5a7399f8fd, type: 2}
   resolutionSummary: Lina ties the box with its faded ribbon. The mooncake cannot
-    repair five silent years, but it gives her a reason to knock on her father's door.
+    repair five silent years, but it gives her a reason to knock on her father's
+    door.
+  arrival:
+  - {fileID: 11400000, guid: 819b16f63aad6704a8ce8bcc1bb57ad7, type: 2}
+  recipeGuide: {fileID: 11400000, guid: 34fdf47226c56ff4d81bf32feb56c09e, type: 2}
+  resolution:
+  - {fileID: 11400000, guid: d7e40b31134190545a7db144b9195eb7, type: 2}

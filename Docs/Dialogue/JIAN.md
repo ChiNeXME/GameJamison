@@ -19,7 +19,7 @@ Jian arrives later and separately, looking for the family tin. He must not alrea
 - **S6-07 — Young Jian:** What if I put it in crooked?
 - **S6-10 — Young Jian:** Please, honoured grinder warrior.
 - **S7-03:** I thought you had decided my part didn't matter.
-- **S7-05:** I did lose the page. I'm sorry. I thought losing it meant I had failed her—and you.
+- **S7-05:** I did lose the page. I'm sorry. I thought losing it meant I had failed her. And you.
 - **S7-08:** It tastes like her kitchen.
 - **S7-10:** Almost is more than I thought we had left.
 - **S7-14:** I'll keep the recipe. Properly this time.

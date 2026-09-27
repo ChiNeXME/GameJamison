@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 002b9076b5a919941a76b7b86978d20e, type: 3}
+  m_Name: 11_Lina_RecipeGuide
+  m_EditorClassIdentifier: Assembly-CSharp::Conversation
+  showPanel: 0
+  panelImage: {fileID: 0}
+  panelColor: {r: 0.06, g: 0.07, b: 0.13, a: 1}
+  panelTitle: 
+  Lines:
+  - text: We begin with the filling. Choose the paste Lina remembers most clearly.
+    npcId: 1
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: Now the centre. Sometimes the important choice is what someone deliberately
+      left out.
+    npcId: 1
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: Sweetness is a recipe setting, not an ingredient. What did her father change?
+    npcId: 1
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: 'Last comes the finish: the mark that told Lina the cake was hers.'
+    npcId: 1
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: Good. Press the mold when the four memories agree.
+    npcId: 1
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}

@@ -321,8 +321,8 @@ public static class RecipeSceneSetup
                 "Tutorial: Finish the cake with her flower mark.",
                 "Finish with osmanthus.")));
 
-        CustomerCase siblings = EnsureCase($"{CasesFolder}/03_MeiAndJian.asset", customerCase => customerCase.EditorSetup(
-            "Mei & Jian",
+        CustomerCase siblings = EnsureCase($"{CasesFolder}/03_Jian.asset", customerCase => customerCase.EditorSetup(
+            "Jian",
             "The mold glows, but its crack remains. The mooncake tastes almost like Grandmother's kitchen. Mei and Jian write down what remains together.",
             new CaseClue(RecipeCategory.Filling, RecipeChoice.Lotus,
                 "Mei ground lotus seeds beside Grandmother.",
@@ -446,7 +446,7 @@ public static class RecipeSceneSetup
         summary.fontStyle = FontStyles.Normal;
         summary.color = Color.white;
 
-        TextMeshProUGUI continueLabel = CreateButton(panel.transform, "ContinueButton", "NEXT CUSTOMER", new Vector2(0.5f, 0f), new Vector2(0f, 30f), new Vector2(340f, 72f), session.ContinueToNextCase);
+        TextMeshProUGUI continueLabel = CreateButton(panel.transform, "ContinueButton", "CONTINUE", new Vector2(0.5f, 0f), new Vector2(0f, 30f), new Vector2(340f, 72f), session.ContinueToNextCase);
 
         SetObjectReference(session, "resolutionPanel", panel);
         SetObjectReference(session, "resolutionText", summary);
@@ -503,31 +503,7 @@ public static class RecipeSceneSetup
 
     private static GameObject ConfigureEnding(Transform canvas, GameObject sessionObject, GameFlowController flow)
     {
-        EndingScreen ending = RequireOrAdd<EndingScreen>(sessionObject);
-
-        GameObject panel = CreatePanel(canvas, "EndingPanel", new Color(0.06f, 0.07f, 0.13f, 0.97f));
-        StretchToParent(panel.GetComponent<RectTransform>());
-
-        TextMeshProUGUI title = CreateOverlayText(panel.transform, "Title", "THE MOON SHINES AGAIN", new Vector2(0.5f, 0.5f), new Vector2(0f, 260f), new Vector2(1200f, 110f), 64f, TextAlignmentOptions.Center);
-        title.rectTransform.pivot = new Vector2(0.5f, 0.5f);
-        title.color = new Color(1f, 0.82f, 0.45f);
-
-        TextMeshProUGUI body = CreateOverlayText(panel.transform, "Body", "Full moonlight reaches the bakery floor.\nThe baker places a tiny cat-shaped mooncake on the windowsill, and Artemis takes one bite.", new Vector2(0.5f, 0.5f), new Vector2(0f, 120f), new Vector2(1100f, 140f), 30f, TextAlignmentOptions.Center);
-        body.rectTransform.pivot = new Vector2(0.5f, 0.5f);
-        body.fontStyle = FontStyles.Normal;
-        body.color = new Color(0.9f, 0.9f, 1f);
-
-        TextMeshProUGUI credits = CreateOverlayText(panel.transform, "Credits", "CREDITS\n<size=80%>Add your team's names here</size>", new Vector2(0.5f, 0.5f), new Vector2(0f, -60f), new Vector2(1000f, 160f), 30f, TextAlignmentOptions.Center);
-        credits.rectTransform.pivot = new Vector2(0.5f, 0.5f);
-        credits.color = new Color(0.78f, 0.78f, 0.9f);
-
-        CreateButton(panel.transform, "PlayAgainButton", "PLAY AGAIN", new Vector2(0.5f, 0.5f), new Vector2(-200f, -260f), new Vector2(340f, 78f), ending.PlayAgain);
-        CreateButton(panel.transform, "TitleButton", "RETURN TO TITLE", new Vector2(0.5f, 0.5f), new Vector2(200f, -260f), new Vector2(340f, 78f), ending.ReturnToTitle);
-
-        SetObjectReference(ending, "flow", flow);
-        SetObjectReference(ending, "panel", panel);
-        EditorUtility.SetDirty(ending);
-        return panel;
+        return EndingCreditsSetup.Build(canvas, sessionObject, flow);
     }
 
     private static GameObject ConfigurePauseMenu(Transform canvas, GameObject sessionObject, CafeSession session, MemoryNotesPanel notes)

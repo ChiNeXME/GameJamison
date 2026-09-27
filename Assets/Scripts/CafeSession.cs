@@ -1,20 +1,20 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using TheLastMooncake.Customers;
 using TheLastMooncake.Recipe;
 using UnityEngine;
-using System.Collections;
 
 namespace TheLastMooncake.Flow
 {
     /// <summary>
-    /// Runs the customers in order. Each case opens the recipe board; a correct
-    /// recipe shows the resolution panel, and finishing the last case shows the ending.
+    /// Runs the story: the opening, then each customer in order (arrival dialogue,
+    /// recipe, wrong-recipe reactions, resolution dialogue), then the ending.
     /// </summary>
     public sealed class CafeSession : MonoBehaviour
     {
-        [SerializeField] private DialogueHolder dialogueHolder;
-        [SerializeField] private DialogueManager DM;    
+        [SerializeField] private DialogueManager DM;
         [SerializeField] private CustomerCase[] cases = Array.Empty<CustomerCase>();
         [SerializeField] private GameFlowController flow = null;
         [SerializeField] private RecipeSelection selection = null;
@@ -23,16 +23,20 @@ namespace TheLastMooncake.Flow
         [SerializeField] private DragDrop dragDrop = null;
         [SerializeField] private CanvasGroup[] recipeControls = Array.Empty<CanvasGroup>();
 
+        [Header("Story")]
+        [SerializeField] private Conversation opening = null;
+        [SerializeField] private Conversation ending = null;
+
         [Header("UI")]
         [SerializeField] private TextMeshProUGUI customerLabel = null;
         [SerializeField] private GameObject resolutionPanel = null;
         [SerializeField] private TextMeshProUGUI resolutionText = null;
         [SerializeField] private TextMeshProUGUI continueLabel = null;
-        
 
         private int caseIndex = -1;
         private int inputBlocks;
         private bool recipeOpen;
+        private bool talking;
 
         public CustomerCase CurrentCase =>
             caseIndex >= 0 && caseIndex < cases.Length ? cases[caseIndex] : null;
@@ -47,6 +51,8 @@ namespace TheLastMooncake.Flow
             if (feedback != null)
             {
                 feedback.RecipeCorrect += HandleRecipeCorrect;
+                feedback.HintRequested += HandleFirstMistake;
+                feedback.ExplicitCorrectionRequested += HandleRepeatedMistake;
             }
         }
 
@@ -55,6 +61,8 @@ namespace TheLastMooncake.Flow
             if (feedback != null)
             {
                 feedback.RecipeCorrect -= HandleRecipeCorrect;
+                feedback.HintRequested -= HandleFirstMistake;
+                feedback.ExplicitCorrectionRequested -= HandleRepeatedMistake;
             }
         }
 
@@ -66,23 +74,18 @@ namespace TheLastMooncake.Flow
                 return;
             }
 
-            PreCase(0, 0);
+            StartCoroutine(CaseRoutine(0, opening));
         }
 
+        /// <summary>Continue button on the "recipe correct" panel.</summary>
         public void ContinueToNextCase()
         {
-            if (caseIndex + 1 < cases.Length)
-            {
-                PreCase(caseIndex+1, caseIndex+1);
-                return;
-            }
-
             if (resolutionPanel != null)
             {
                 resolutionPanel.SetActive(false);
             }
 
-            flow.ShowEnding();
+            StartCoroutine(FinishCaseRoutine());
         }
 
         /// <summary>
@@ -101,11 +104,30 @@ namespace TheLastMooncake.Flow
             RefreshInput();
         }
 
-        private void StartCase(int index)
+        private IEnumerator CaseRoutine(int index, Conversation before)
         {
             caseIndex = index;
             CustomerCase customerCase = cases[index];
+            recipeOpen = false;
+            RefreshInput();
+            selection.ClearAll();
 
+            if (customerLabel != null)
+            {
+                customerLabel.text = $"Customer {index + 1} of {cases.Length}: {customerCase.CustomerName}";
+            }
+
+            flow.BeginCustomerStory();
+            var story = new List<Conversation> { before };
+            story.AddRange(customerCase.Arrival);
+            story.Add(customerCase.RecipeGuide);
+            yield return Talk(story);
+
+            StartCase(customerCase);
+        }
+
+        private void StartCase(CustomerCase customerCase)
+        {
             validator.SetCase(customerCase);
             feedback.ResetAttempts();
             selection.ClearAll();
@@ -115,32 +137,80 @@ namespace TheLastMooncake.Flow
                 resolutionPanel.SetActive(false);
             }
 
-            if (customerLabel != null)
-            {
-                customerLabel.text = $"Customer {index + 1} of {cases.Length}: {customerCase.CustomerName}";
-            }
-
-            // The customer's dialogue will play here once it exists (GameState.CustomerStory);
-            // until then the recipe opens straight away.
             recipeOpen = true;
             RefreshInput();
             flow.MakeRecipeAvailable();
             CaseStarted?.Invoke(customerCase);
         }
 
-        public void PreCase(int ConvoIndex, int Index)
+        private IEnumerator FinishCaseRoutine()
         {
-            StartCoroutine(PreCaseRoutine(ConvoIndex, Index));
+            yield return Talk(CurrentCase.Resolution);
+
+            if (caseIndex + 1 < cases.Length)
+            {
+                yield return CaseRoutine(caseIndex + 1, null);
+                yield break;
+            }
+
+            yield return Talk(new[] { ending });
+            flow.ShowEnding();
         }
 
-        private IEnumerator PreCaseRoutine(int ConvoIndex, int Index)
+        private void HandleFirstMistake(RecipeCategory category)
         {
+            CaseClue clue = CurrentCase?.GetClue(category);
+            if (clue != null)
+            {
+                StartCoroutine(MistakeRoutine(clue.WrongReaction));
+            }
+        }
+
+        private void HandleRepeatedMistake(RecipeCategory category)
+        {
+            CaseClue clue = CurrentCase?.GetClue(category);
+            if (clue != null)
+            {
+                StartCoroutine(MistakeRoutine(clue.WrongReaction, clue.DirectHint));
+            }
+        }
+
+        private IEnumerator MistakeRoutine(params Conversation[] reaction)
+        {
+            recipeOpen = false;
+            RefreshInput();
+            yield return Talk(reaction);
+            recipeOpen = true;
+            RefreshInput();
+        }
+
+        /// <summary>Raises the dialogue box, plays each non-empty conversation, then lowers it.</summary>
+        private IEnumerator Talk(IEnumerable<Conversation> conversations)
+        {
+            var toPlay = new List<Conversation>();
+            foreach (Conversation conversation in conversations)
+            {
+                if (conversation != null && conversation.Lines.Count > 0)
+                {
+                    toPlay.Add(conversation);
+                }
+            }
+
+            if (toPlay.Count == 0 || DM == null || talking)
+            {
+                yield break;
+            }
+
+            talking = true;
             DM.Rise();
-            Conversation Convo = dialogueHolder.conversations[ConvoIndex];
-            yield return DM.ConversationStart(Convo);
+            foreach (Conversation conversation in toPlay)
+            {
+                yield return DM.ConversationStart(conversation);
+            }
+
             DM.Drop();
             yield return new WaitForSeconds(0.5f);
-            StartCase(Index);
+            talking = false;
         }
 
         private void HandleRecipeCorrect()
@@ -152,17 +222,22 @@ namespace TheLastMooncake.Flow
 
             if (resolutionText != null)
             {
-                resolutionText.text = CurrentCase.ResolutionSummary;
+                // With resolution dialogue the story is told there; the summary is the fallback.
+                resolutionText.text = CurrentCase.Resolution.Count > 0 ? string.Empty : CurrentCase.ResolutionSummary;
             }
 
             if (continueLabel != null)
             {
-                continueLabel.text = caseIndex + 1 < cases.Length ? "NEXT CUSTOMER" : "FINISH";
+                continueLabel.text = "CONTINUE";
             }
 
             if (resolutionPanel != null)
             {
                 resolutionPanel.SetActive(true);
+            }
+            else
+            {
+                StartCoroutine(FinishCaseRoutine());
             }
 
             CaseSolved?.Invoke(CurrentCase);

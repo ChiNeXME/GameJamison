@@ -5,7 +5,7 @@ Lina is the first customer and the guided gameplay tutorial. She is a florist wh
 - **L1-03:** Five. I kept finding reasons not to come home.
 - **L1-05:** I ran out of reasons that sounded honest.
 - **L1-07:** My father left this at my flower shop this morning. He didn't come inside.
-- **L1-08:** We haven't spoken properly since I left. I want to bring him one of the mooncakes he used to make for me—but I never learned the recipe.
+- **L1-08:** We haven't spoken properly since I left. I want to bring him one of the mooncakes he used to make for me. But I never learned the recipe.
 - **L2-01:** Red bean paste. I used to steal warm spoonfuls while he was filling the molds.
 - **L2-03:** No salted yolk. I hated the salty centre, so he quietly stopped adding one to mine.
 - **L2-05:** Grandfather thought changing a family recipe was disrespectful. Dad never argued. He just marked my cakes with a tiny flower so I would know.

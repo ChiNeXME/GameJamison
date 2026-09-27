@@ -8,7 +8,7 @@
 - **L3-00A:** We begin with the filling. Choose the paste Lina remembers most clearly.
 - **L3-01B:** Now the centre. Sometimes the important choice is what someone deliberately left out.
 - **L3-02B:** Sweetness is a recipe setting, not an ingredient. What did her father change?
-- **L3-03B:** Last comes the finish—the mark that told Lina the cake was hers.
+- **L3-03B:** Last comes the finish: the mark that told Lina the cake was hers.
 - **L3-05:** Good. Press the mold when the four memories agree.
 - **L4-03:** You were young. So was the hurt.
 - **L4-05:** No. But it can accompany what you say next.

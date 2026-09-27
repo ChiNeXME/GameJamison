@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 002b9076b5a919941a76b7b86978d20e, type: 3}
+  m_Name: 12_Lina_Resolution
+  m_EditorClassIdentifier: Assembly-CSharp::Conversation
+  showPanel: 0
+  panelImage: {fileID: 0}
+  panelColor: {r: 0.06, g: 0.07, b: 0.13, a: 1}
+  panelTitle: 
+  Lines:
+  - text: The finished mooncake bears a small osmanthus flower. Lina turns the box
+      in her hands but does not open it immediately.
+    npcId: 0
+    style: 3
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: He changed a family recipe for me, and I mistook his quietness for not
+      caring.
+    npcId: 4
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: You were young. So was the hurt.
+    npcId: 1
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: This won't undo what I said before I left.
+    npcId: 4
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: No. But it can accompany what you say next.
+    npcId: 1
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: Then I should go before I invent another excuse.
+    npcId: 4
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: Lina ties the yellow ribbon, thanks Artemis with a small bow, and leaves
+      carrying the mooncake to her father's house.
+    npcId: 0
+    style: 3
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: A changed recipe can still carry its roots.
+    npcId: 5
+    style: 1
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: 'The moon brightens slightly. One deeper memory remains out of reach. The
+      bell rings again: Mei has arrived.'
+    npcId: 0
+    style: 3
+    speakerName: 
+    panelImage: {fileID: 0}

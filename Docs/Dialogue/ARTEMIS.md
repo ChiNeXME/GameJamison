@@ -21,7 +21,7 @@ Artemis cannot speak aloud. Display these as thoughts, memory subtitles, or note
 - **S3-14 — Thought:** One yolk. A little moon in the middle.
 - **S3-28 — Thought:** Each carried a different half. Perhaps what remains is enough.
 - **S4-02 — Notebook:** Mei ground lotus seeds beside Grandmother.
-- **S4-03 — Notebook:** One small spoonful—the sugar must not bury the lotus.
+- **S4-03 — Notebook:** One small spoonful. The sugar must not bury the lotus.
 - **S4-04 — Notebook:** Jian placed one little moon in the centre.
 - **S4-05 — Notebook:** Osmanthus clung to Grandmother's sleeves and finished the cakes.
 - **S5-F3 — Direct hint:** The filling was lotus paste.

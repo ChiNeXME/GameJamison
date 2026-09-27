@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 002b9076b5a919941a76b7b86978d20e, type: 3}
+  m_Name: 22_Mei_Resolution
+  m_EditorClassIdentifier: Assembly-CSharp::Conversation
+  showPanel: 0
+  panelImage: {fileID: 0}
+  panelColor: {r: 0.06, g: 0.07, b: 0.13, a: 1}
+  panelTitle: 
+  Lines:
+  - text: The mold glows faintly, then dims. Mei breaks the finished cake in half
+      and tastes it.
+    npcId: 0
+    style: 3
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: It's close. The lotus, the sugar, the flowers. All of it is right.
+    npcId: 2
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: But the middle is hollow. It tastes like something is missing.
+    npcId: 2
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: Perhaps the missing part was never yours to remember.
+    npcId: 1
+    style: 0
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: She left the centre empty because she couldn't remember it. Not because
+      it was never there.
+    npcId: 5
+    style: 1
+    speakerName: 
+    panelImage: {fileID: 0}
+  - text: Mei stays at the counter, turning the dented tin in her hands.
+    npcId: 0
+    style: 3
+    speakerName: 
+    panelImage: {fileID: 0}
