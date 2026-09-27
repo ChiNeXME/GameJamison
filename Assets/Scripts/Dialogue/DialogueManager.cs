@@ -24,6 +24,10 @@ public class DialogueManager : MonoBehaviour
     float t = 0f;
     bool SkipDialogue;
     bool isTalking;
+    [Tooltip("How dark the scene behind the dialogue box gets while someone is talking.")]
+    [SerializeField, Range(0f, 1f)] float dimAmount = 0.45f;
+    Image dim;
+    Coroutine dimFade;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -31,6 +35,56 @@ public class DialogueManager : MonoBehaviour
         GameObject sfxPlayer = GameObject.Find("SFXPlayer");
         AS = sfxPlayer != null ? sfxPlayer.GetComponent<AudioSource>() : null;
         rectTransform = TextBox.GetComponent<RectTransform>();
+    }
+
+    void Awake()
+    {
+        CreateDim(); // before anything can call Rise()
+    }
+
+    // A full-screen dark layer just behind the dialogue box, portrait and story panel.
+    void CreateDim()
+    {
+        Transform canvas = TextBox.transform.parent;
+        int index = TextBox.transform.GetSiblingIndex();
+        foreach (Component behind in new Component[] { DialogueImage, storyPanel })
+        {
+            if (behind != null && behind.transform.parent == canvas)
+                index = Mathf.Min(index, behind.transform.GetSiblingIndex());
+        }
+
+        var go = new GameObject("DialogueDim", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+        go.transform.SetParent(canvas, false);
+        go.transform.SetSiblingIndex(index);
+        var rect = (RectTransform)go.transform;
+        rect.anchorMin = Vector2.zero;
+        rect.anchorMax = Vector2.one;
+        rect.offsetMin = rect.offsetMax = Vector2.zero;
+
+        dim = go.GetComponent<Image>();
+        dim.color = new Color(0f, 0f, 0f, 0f);
+        dim.raycastTarget = false; // notes and pause stay clickable while someone talks
+    }
+
+    void FadeDim(float target)
+    {
+        if (dim == null)
+            return;
+        if (dimFade != null)
+            StopCoroutine(dimFade);
+        dimFade = StartCoroutine(FadeDimRoutine(target));
+    }
+
+    IEnumerator FadeDimRoutine(float target)
+    {
+        float start = dim.color.a;
+        for (float f = 0f; f < 0.4f; f += Time.deltaTime)
+        {
+            dim.color = new Color(0f, 0f, 0f, Mathf.Lerp(start, target, f / 0.4f));
+            yield return null;
+        }
+        dim.color = new Color(0f, 0f, 0f, target);
+        dimFade = null;
     }
 
     // Update is called once per frame
@@ -51,6 +105,7 @@ public class DialogueManager : MonoBehaviour
     public void Drop() //test for dialogue
     {
         t = 0;
+        FadeDim(0f);
         StartCoroutine(DropDialogueBox());
     }
     public void Rise() //test for dialogue
@@ -59,6 +114,7 @@ public class DialogueManager : MonoBehaviour
         TextDisplay.text = "";
         DialogueImage.enabled = false;
         TextBox.SetActive(true);
+        FadeDim(dimAmount);
         StartCoroutine(RiseDialogueBox());
     }
 

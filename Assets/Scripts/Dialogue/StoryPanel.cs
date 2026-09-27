@@ -24,6 +24,15 @@ public class StoryPanel : MonoBehaviour
         background.color = color;
         SetPicture(sprite);
         SetTitle(titleText);
+
+        // Straight after a scene transition the screen is still black: appear at once so the
+        // fade-in reveals this panel instead of flashing the cafe behind it.
+        if (SceneFader.IsScreenCovered)
+        {
+            group.alpha = 1f;
+            yield break;
+        }
+
         yield return Fade(0f, 1f);
     }
 

@@ -10,7 +10,7 @@ namespace TheLastMooncake.UI
         [SerializeField] private GameObject SettingsPanel;
         public void Play()
         {
-            SceneManager.LoadScene(gameSceneName);
+            SceneFader.LoadScene(gameSceneName);
         }
 
         public void Quit()

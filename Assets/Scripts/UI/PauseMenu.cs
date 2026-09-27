@@ -107,14 +107,14 @@ namespace TheLastMooncake.UI
         public void Restart()
         {
             Time.timeScale = 1f;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneFader.LoadScene(SceneManager.GetActiveScene().name);
         }
 
         public void ReturnToTitle()
         {
             SettingsScript.instance?.Close();
             Time.timeScale = 1f;
-            SceneManager.LoadScene(titleSceneName);
+            SceneFader.LoadScene(titleSceneName);
         }
 
         private void OnDestroy()

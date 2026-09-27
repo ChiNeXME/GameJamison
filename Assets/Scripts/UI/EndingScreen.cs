@@ -132,13 +132,13 @@ namespace TheLastMooncake.UI
         public void PlayAgain()
         {
             StopMusic();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneFader.LoadScene(SceneManager.GetActiveScene().name);
         }
 
         public void ReturnToTitle()
         {
             StopMusic();
-            SceneManager.LoadScene(titleSceneName);
+            SceneFader.LoadScene(titleSceneName);
         }
     }
 }
